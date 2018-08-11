@@ -3,6 +3,7 @@ Directly remoted from my MacBook Pro.
 
 This is a C++ program for "狼人杀" in Chinese. I don't really know how to translate this name correctly.
 
+Warning: This program should not be used under current version.
 
 File information:
 
