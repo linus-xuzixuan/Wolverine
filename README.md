@@ -5,11 +5,13 @@ This is a C++ program for "狼人杀" in Chinese. I don't really know how to tra
 
 Warning: This program should not be used under current version.
 
+Branch master is currently paused.
+
 File information:
 
 Clean.bash: A command to clear the screen. Will probably be deprecated later.
 
-Distrib.lrs: Records the number of different identities ffor different numbers of players. Will be updated after I complete the remaining code on other files.
+Distrib.lrs: Records the number of different identities for different numbers of players. Will be updated after I complete the remaining code on other files.
 
 Execute.h: Open a specified file. Co-operates with clean.bash. Also will probably be deprecated later.
 
