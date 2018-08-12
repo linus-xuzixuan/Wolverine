@@ -16,10 +16,10 @@ This version currently works on Unix-based systems only as clean.bash is literal
 #include <stdlib.h>
 #include "Execute.h"
 #include "Player.h"
+#include "Logger.h"
 using namespace std;
 
 ifstream fin;
-ofstream fout;
 string spam; //For all kinds of pauses
 bool gameOver;
 int numPlayers;
