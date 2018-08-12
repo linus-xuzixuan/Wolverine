@@ -145,26 +145,25 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
         int a=rand()%(Wolverines+Villagers+Power)+1;
         if(Left[a-1]==1){goto defid;}
         if(a<=Wolverines){
-            cout<<Players[j].set_id(1)<<endl;
+            Players[j].set_id(1);
         }else if(a<=Villagers+Wolverines){
-            cout<<Players[j].set_id(2)<<endl;
+            Players[j].set_id(2);
         }else{
             if(Present[W]){
-                cout<<Players[j].set_id(3)<<endl;
+                Players[j].set_id(3);
                 Present[W]=false;
             }else if(Present[P]){
-                cout<<Players[j].set_id(4)<<endl;
+                Players[j].set_id(4);
                 Present[P]=false;
             }else if(Present[H]){
-                cout<<Players[j].set_id(5)<<endl;
+                Players[j].set_id(5);
                 hunter=j;
                 Present[H]=false;
             }else{
-                cout<<Players[j].set_id(6)<<endl;
+                Players[j].set_id(6);
                 Present[G]=false;
             }
         }
-        cout<<a<<endl;
         Left[a-1]=1;
     }
 }
