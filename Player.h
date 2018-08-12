@@ -1,6 +1,8 @@
 /* Player.h
 By Linus Xu (linus-xuzixuan on GitHub)
 */
+#ifndef PLAYER_H
+#define PLAYER_H
 #include <string>
 using namespace std;
 
@@ -49,3 +51,5 @@ string Player::get_identity() const{
 bool Player::get_state() const{
 	return state;
 }
+
+#endif //PLAYER_H
