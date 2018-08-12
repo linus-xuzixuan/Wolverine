@@ -318,13 +318,31 @@ void startDay(Player Players[],int result1,int result2,int hunter){
     if(gameOver)
         return;
     
+    if(hunter==-1){
+        goto nohunter;
+    }
     if(Players[hunter].get_state()==0 && !hunterfired){
         int target;
         cout<<"Hunter, open fire!"<<endl;
+        hunterfire:
         cout<<"Target (0 for abandon):";
         cin>>target;
+        if(Players[target-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
+            goto hunterfire;
+        }
+        if(target<0 || target>numPlayers){
+            cout<<"Not a valid player!"<<endl;
+            goto hunterfire;
+        }
+        if(target==0){
+            cout<<"Abandoned."<<endl;
+        }else{
+            cout<<"Player "<<target<<" killed.";
+        }
     }
 
+    nohunter:
     //Check who should speak first
     int j=0;
     for(j=0;j<numPlayers;j++){
