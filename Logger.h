@@ -31,11 +31,17 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
 }
 
 void lognight(Player Players[],int killed1,int killed2){
+    //Logging Wolverine's kill
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
         fout<<", but was rescued by the Witch."<<endl;
     }else{
         fout<<"."<<endl;
+    }
+
+    //Logging Witch's poison (if any)
+    if(killed2!=0){
+        fout<<"Witch poisoned Player "<<killed2<<endl;
     }
 }
 
