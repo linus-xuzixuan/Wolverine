@@ -30,7 +30,7 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     }
 }
 
-void lognight(Player Players[],int killed1,int killed2){
+void lognight(Player Players[],int killed1,int killed2,int verify){
     //Logging Wolverine's kill
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
@@ -42,6 +42,15 @@ void lognight(Player Players[],int killed1,int killed2){
     //Logging Witch's poison (if any)
     if(killed2!=0){
         fout<<"Witch poisoned Player "<<killed2<<endl;
+    }
+
+    //Logging Predictor's verification
+    fout<<"Predictor checked Player "<<verify;
+    string id=Players[verify-1].get_identity();
+    if(id=="Wolverine"){
+        fout<<", who is bad."<<endl;
+    }else{
+        fout<<", who is good."<<endl;
     }
 }
 
