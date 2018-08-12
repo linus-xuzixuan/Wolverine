@@ -339,6 +339,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
             cout<<"Abandoned."<<endl;
         }else{
             cout<<"Player "<<target<<" killed.";
+            Players[target-1].set_life(0);
         }
     }
 
