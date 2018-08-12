@@ -7,6 +7,7 @@ By Linus Xu (linus-xuzixuan on GitHub)
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "Player.h"
 
 using namespace std;
@@ -26,6 +27,15 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     fout<<endl<<"Identities:"<<endl;
     for(int i=0;i<numWolverines+numPowers+numVillagers;i++){
         fout<<"Player "<<i+1<<" is a "<<Players[i].get_identity()<<"."<<endl;
+    }
+}
+
+void lognight(Player Players[],int killed1,int killed2){
+    fout<<"Wolverine(s) killed Player "<<abs(killed1);
+    if(killed1<0){
+        fout<<", but was rescued by the Witch."<<endl;
+    }else{
+        fout<<"."<<endl;
     }
 }
 

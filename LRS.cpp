@@ -207,7 +207,7 @@ void startNight(Player Players[]){
     cin>>choice;
     if(choice=='Y' || choice=='y'){
         Players[playerchosen-1].set_life(1);
-        rescue=true;killed1=0;
+        rescue=true;killed1*=-1;
         cout<<"Ok, rescued."<<endl;
     }else if(choice=='N' || choice=='n'){
         cout<<"Ok, he (she?) is dead."<<endl;
@@ -241,10 +241,7 @@ void startNight(Player Players[]){
             }
             Players[playerchosen-1].set_life(0);
             killed2=playerchosen;
-            if(killed1==0){
-                killed1=killed2;
-                killed2=0;
-            }
+            
             cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
         }
     }else if(choice=='N' || choice=='n'){
@@ -278,6 +275,10 @@ void startNight(Player Players[]){
 
 void startDay(Player Players[],int result1,int result2){
     //Result announcement
+    if(killed1<0){
+        killed1=killed2;
+        killed2=0;
+    }
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
     }else if(killed2==0){
