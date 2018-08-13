@@ -346,6 +346,7 @@ void startNight(Player Players[],int numPlayers){
             cout<<"Player "<<verify<<" is good."<<endl;
         }   
     }else{
+        verify=-1;
         cout<<"Who do you want to verify?"<<endl;
         system("sleep 2");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
