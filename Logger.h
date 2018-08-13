@@ -14,11 +14,12 @@ using namespace std;
 ofstream fout;
 
 void openfile(){
-    fout.open("./LRS.log");
+    fout.open("./LRS.log",ios::app);
     if(fout.fail()){
         cout<<"Log opening failed.";
         exit(1);
     }
+    fout<<"---Program started---\n\n";
 }
 
 void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){

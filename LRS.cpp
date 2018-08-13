@@ -367,15 +367,15 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
     }else{
-        if(killed1>killed2){
-            int temp;
-            temp=killed2;
-            killed2=killed1;
-            killed1=temp;
-        }
         if(killed2==0){
             cout<<"Player "<<killed1<<" dead!"<<endl;
         }else{
+            if(killed1>killed2){
+                int temp;
+                temp=killed2;
+                killed2=killed1;
+                killed1=temp;
+            }
             cout<<"Player "<<killed1<<" and "<<killed2<<" dead!"<<endl;
         }
     }
