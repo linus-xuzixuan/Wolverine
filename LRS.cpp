@@ -219,8 +219,10 @@ void startNight(Player Players[],int numPlayers){
     if(choice!='Y' && choice!='y')
         goto decide;
 
-    Players[playerchosen-1].set_life(0);
-    killed1=playerchosen;
+    if(Players[playerchosen-1].get_shield()==0){
+        Players[playerchosen-1].set_life(0);
+        killed1=playerchosen;
+    }
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
     system("clear");
@@ -239,8 +241,12 @@ void startNight(Player Players[],int numPlayers){
             Players[playerchosen-1].set_life(1);
             rescue=true;killed1*=-1;saveused=1;
             cout<<"Ok, rescued."<<endl;
+            if(Players[playerchosen-1].get_shield()){
+                Players[playerchosen-1].set_life(0);
+                killed1=playerchosen;
+            }
         }else if(choice=='N' || choice=='n'){
-            cout<<"Ok, he (she?) is dead."<<endl;
+            cout<<"Ok, he (she?) is probably dead."<<endl;
         }else{
             cout<<"Not a valid decision!"<<endl;
             goto decide2;
@@ -252,7 +258,7 @@ void startNight(Player Players[],int numPlayers){
     cin>>choice;
     if(choice=='Y' || choice=='y'){
         if(rescue){
-            cout<<"Not valid. You have rescued someone."<<endl;
+            cout<<"Not valid. You have rescued someone in this turn."<<endl;
         }else{
             decide31:
             cout<<"Who?";
@@ -311,13 +317,10 @@ void startNight(Player Players[],int numPlayers){
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
     if(killed1<0){
-        if(Players[killed1].get_shield()==false){
-            killed1=killed2;
-            killed2=0;
-        }else{
-            killed1*=-1;
-        }
+        killed1=killed2;
+        killed2=0;
     }
+
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
     }else if(killed2==0){
