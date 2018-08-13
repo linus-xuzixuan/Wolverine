@@ -55,7 +55,11 @@ void lognight(Player Players[],int killed1,int killed2,int verify){
 }
 
 void logday(Player Players[],int votekill){
-    fout<<"Player "<<votekill<<" was voted out."<<endl;
+    if(votekill!=0){
+        fout<<"Player "<<votekill<<" was voted out."<<endl;
+    }else{
+        fout<<"Peace today."<<endl;
+    }
 }
 
 void loghunter(Player Players[],int hunterkill){

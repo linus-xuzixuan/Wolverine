@@ -352,7 +352,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         if(Players[j].get_state()==1)
             break;
     }
-    cout<<"Please speak, starting from Player "<<j<<endl;
+    cout<<"Please speak, starting from Player "<<j+1<<endl;
 
     //End of the day
     int playerChosen;
