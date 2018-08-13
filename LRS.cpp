@@ -119,7 +119,7 @@ int main(void){
     for(int j=0;j<numPlayers;j++){
         cout<<"Player "<<(j+1)<<", type something:";
         cin>>spam;
-        cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity();
+        cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity()<<endl;
         cout<<"Type anything for confirmation:";
         cin>>spam;
         Execute("./Clean.bash");
