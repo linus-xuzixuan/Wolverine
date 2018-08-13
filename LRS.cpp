@@ -23,12 +23,13 @@ string spam; //For all kinds of pauses
 bool gameOver=0;
 bool hunterfired=0;
 bool saveused=0;
-int hunter;
+int hunter=0;
 int numPlayers;
 char choice;
 int numWolverines;
 int numVillagers;
 int numPowers;
+bool guardpresent=0;
 int killed1=0,killed2=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
@@ -98,6 +99,7 @@ int main(void){
                 cout<<"1 witch"<<endl;
             }else if(Power[i]=='G'){
                 Present[G]=true;
+                guardpresent=true;
                 cout<<"1 guard"<<endl;
             }else if(Power[i]=='P'){
                 Present[P]=true;
@@ -174,6 +176,28 @@ void startNight(Player Players[],int numPlayers){
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
     system("sleep 3");
+
+    //Guard's turn
+    if(guardpresent){
+        cout<<"Guard!"<<endl;
+        decide0:
+        cout<<"Who do you want to protect tonight?";
+        cin>>playerchosen;
+        if(playerchosen<1 || playerchosen>numPlayers){
+            cout<<"Not a valid player!"<<endl;
+            goto decide0;
+        }
+        if(Players[playerchosen-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
+            goto decide0;
+        }
+        cout<<"Player "<<playerchosen<<", is that right?";
+        cin>>choice;
+        if(choice!='Y' && choice!='y')
+            goto decide0;
+        cout<<"Ok, he (she?) is likely to be safe tonight."<<endl;
+        cout<<"Close your eyes..."<<endl;
+    }
 
     //Wolverine's turn
     cout<<"Wolverines!"<<endl;
@@ -287,8 +311,12 @@ void startNight(Player Players[],int numPlayers){
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
     if(killed1<0){
-        killed1=killed2;
-        killed2=0;
+        if(Players[killed1].get_shield()==false){
+            killed1=killed2;
+            killed2=0;
+        }else{
+            killed1*=-1;
+        }
     }
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
