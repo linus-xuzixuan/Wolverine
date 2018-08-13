@@ -37,7 +37,7 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
         if(guard==0){
             fout<<"Guard abandoned tonight, or is dead."<<endl;
         }else{
-            fout<<"Guard protected Player "<<guard<<endl;
+            fout<<"Guard protected Player "<<guard<<"."<<endl;
         }
     }
     
