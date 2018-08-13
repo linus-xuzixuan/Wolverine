@@ -8,21 +8,21 @@ using namespace std;
 
 class Player{
 	public:
-	void set_life(bool new_state);
+	void set_life(int new_state);
 	string set_id(int id);
-	bool get_state() const;
+	int get_state() const;
 	string get_identity() const;
 	void guard();
 	void clear_guard();
 	bool get_shield() const;
 	friend void clear_guard(Player Players[],int num);
 	private:
-	bool state;
+	int state;
 	string identity;
 	bool guarded;
 };
 
-void Player::set_life(bool new_state){
+void Player::set_life(int new_state){
 	state=new_state;
 }
 
@@ -53,7 +53,7 @@ string Player::get_identity() const{
 	return identity;
 }
 
-bool Player::get_state() const{
+int Player::get_state() const{
 	return state;
 }
 

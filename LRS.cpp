@@ -148,7 +148,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
     int Left[Wolverines+Villagers+Power];
     srand(time(0));
     for(int j=0;j<Wolverines+Villagers+Power;j++){
-        Players[j].set_life(true);
+        Players[j].set_life(1);
         defid:
         int a=rand()%(Wolverines+Villagers+Power)+1;
         if(Left[a-1]==1){goto defid;}
@@ -186,7 +186,7 @@ void startNight(Player Players[],int numPlayers){
     //Guard's turn
     int guard=-1;
     if(guardpresent){
-        if(Players[findplayer(Players,"Guard",numPlayers)].get_state()==true){
+        if(Players[findplayer(Players,"Guard",numPlayers)].get_state()!=0){
             cout<<"Guard!"<<endl;
             decide0:
             cout<<"Who do you want to protect tonight (0 for abandon)?";
@@ -242,7 +242,7 @@ void startNight(Player Players[],int numPlayers){
         goto decide;
 
     if(Players[playerchosen-1].get_shield()==0){
-        Players[playerchosen-1].set_life(0);
+        Players[playerchosen-1].set_life(2);
     }
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
@@ -253,7 +253,7 @@ void startNight(Player Players[],int numPlayers){
     //Witch's turn
     bool rescue=0;
     cout<<"Witch!"<<endl;
-    if(Players[findplayer(Players,"Witch",numPlayers)].get_state()==true){
+    if(Players[findplayer(Players,"Witch",numPlayers)].get_state()!=0){
         decide2:
         cout<<"Player "<<playerchosen<<" dead, rescue?";
         cin>>choice;
@@ -299,7 +299,7 @@ void startNight(Player Players[],int numPlayers){
                 if(choice!='Y' && choice!='y'){
                     goto decide31;
                 }
-                Players[playerchosen-1].set_life(0);
+                Players[playerchosen-1].set_life(2);
                 killed2=playerchosen;
 
                 cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
@@ -350,6 +350,11 @@ void startNight(Player Players[],int numPlayers){
     lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
     system("clear");
+    for(int i=0;i<numPlayers;i++){
+        if(Players[i].get_state()==2){
+            Players[i].set_life(0);
+        }
+    }
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
