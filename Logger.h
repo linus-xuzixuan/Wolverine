@@ -31,7 +31,16 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     fout<<endl;
 }
 
-void lognight(Player Players[],int killed1,int killed2,int verify){
+void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
+    //Logging guard's guard
+    if(guard>=0){
+        if(guard==0){
+            fout<<"Guard abandoned tonight, or is dead."<<endl;
+        }else{
+            fout<<"Guard protected Player "<<guard<<endl;
+        }
+    }
+    
     //Logging Wolverine's kill
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
