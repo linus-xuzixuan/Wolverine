@@ -24,9 +24,9 @@ This version of Distrib.lrs will be the standard, and PRs concerning additions w
 
 Basic format:
 
-<Total number of players> <Number of wolverines> <Number of villagers> <Presence of powers>*
+<Total number of players> <Number of wolverines> <Number of villagers> <Presence of powers>
   
-* W, P, H, G each for Witch, Predictor, Hunter, and Guard. Add one space between each.
+Inside "Presence of powers", W, P, H, G each for Witch, Predictor, Hunter, and Guard. Add one space between each.
 
 The number of players should be put in a increasing order one by one, with no blank lines in between.
 
