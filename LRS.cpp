@@ -279,6 +279,7 @@ void startNight(Player Players[],int numPlayers){
         cout<<"Player "<<verify<<" is good."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
+      
     lognight(Players,killed1,killed2,verify);
     system("sleep 5");
     Execute("./Clean.bash");
