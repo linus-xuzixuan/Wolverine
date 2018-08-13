@@ -272,7 +272,7 @@ void startNight(Player Players[]){
         cout<<"Player "<<verify<<" is good."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
-
+    lognight(Players,killed1,killed2,verify);
     system("sleep 5");
 }
 
@@ -340,6 +340,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         }else{
             cout<<"Player "<<target<<" killed.";
             Players[target-1].set_life(0);
+            loghunter(Players,target);
         }
     }
 
@@ -379,4 +380,6 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
     }
+
+    logday(Players,playerChosen);
 }
