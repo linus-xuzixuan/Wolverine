@@ -13,7 +13,9 @@ class Player{
 	bool get_state() const;
 	string get_identity() const;
 	void guard();
+	void clear_guard();
 	bool get_shield() const;
+	friend void clear_guard(Player Players[],int num);
 	private:
 	bool state;
 	string identity;
@@ -61,6 +63,12 @@ bool Player::get_shield() const{
 
 void Player::guard(){
 	guarded=true;
+}
+
+void clear_guard(Player Players[],int num){
+	for(int i=0;i<num;i++){
+		Players[i].guarded=false;
+	}
 }
 
 #endif //PLAYER_H

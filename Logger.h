@@ -31,7 +31,16 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     fout<<endl;
 }
 
-void lognight(Player Players[],int killed1,int killed2,int verify){
+void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
+    //Logging guard's guard
+    if(guard>=0){
+        if(guard==0){
+            fout<<"Guard abandoned tonight, or is dead."<<endl;
+        }else{
+            fout<<"Guard protected Player "<<guard<<"."<<endl;
+        }
+    }
+    
     //Logging Wolverine's kill
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
@@ -42,7 +51,7 @@ void lognight(Player Players[],int killed1,int killed2,int verify){
 
     //Logging Witch's poison (if any)
     if(killed2!=0){
-        fout<<"Witch poisoned Player "<<killed2<<endl;
+        fout<<"Witch poisoned Player "<<killed2<<"."<<endl;
     }
 
     //Logging Predictor's verification
@@ -68,6 +77,19 @@ void logday(Player Players[],int votekill){
 void loghunter(Player Players[],int hunterkill){
     fout<<"Hunter shot Player "<<hunterkill<<"."<<endl;
     fout<<endl;
+}
+
+void logover(int reason){
+    switch(reason){
+        case 1:
+        fout<<"All wolverines dead. ";
+        break;
+        case 2:
+        fout<<"All villagers dead. ";
+        break;
+        case 3:
+        fout<<"All powers dead. ";
+    }
 }
 
 #endif //LOGGER_H
