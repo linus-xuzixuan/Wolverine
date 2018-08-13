@@ -420,6 +420,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
     }
+    
     if(Players[playerChosen].get_identity()=="Hunter" && !hunterfired){
         hunterfired=true;
         int target;
