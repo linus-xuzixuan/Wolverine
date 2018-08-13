@@ -56,12 +56,16 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
     }
 
     //Logging Predictor's verification
-    fout<<"Predictor checked Player "<<verify;
-    string id=Players[verify-1].get_identity();
-    if(id=="Wolverine"){
-        fout<<", who is bad."<<endl;
+    if(verify!=0){
+        fout<<"Predictor checked Player "<<verify;
+        string id=Players[verify-1].get_identity();
+        if(id=="Wolverine"){
+            fout<<", who is bad."<<endl;
+        }else{
+            fout<<", who is good."<<endl;
+        }
     }else{
-        fout<<", who is good."<<endl;
+        fout<<"The predictor is already dead."<<endl;
     }
     fout<<endl;
 }

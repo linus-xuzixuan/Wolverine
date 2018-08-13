@@ -342,7 +342,7 @@ void startNight(Player Players[],int numPlayers){
             cout<<"Player "<<verify<<" is good."<<endl;
         }   
     }else{
-        cout<<"Who do you want to verify?";
+        cout<<"Who do you want to verify?"<<endl;
         system("sleep 2");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
@@ -474,11 +474,10 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
             loghunter(Players,target);
         }
     }
-
+     
+    logday(Players,playerChosen,day);
     if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
         return;
-        
-    logday(Players,playerChosen,day);
     killed1=0;killed2=0;
 }
 
