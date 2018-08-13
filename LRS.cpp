@@ -166,6 +166,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
         }
         Left[a-1]=1;
     }
+    logid(Wolverines,Power,Villagers,Players);
 }
 
 void startNight(Player Players[]){
