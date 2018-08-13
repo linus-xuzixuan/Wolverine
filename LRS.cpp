@@ -326,19 +326,26 @@ void startNight(Player Players[],int numPlayers){
     //Predictor's turn
     int verify;
     cout<<"Predictor!"<<endl;
-    decide4:
-    cout<<"Who do you want to verify?";
-    cin>>verify;
-    if(verify<1 || verify>numPlayers){
-        cout<<"Not a valid player!"<<endl;
-        goto decide4;
-    }
-    string id=Players[verify-1].get_identity();
-    if(id=="Wolverine"){
-        cout<<"Player "<<verify<<" is bad."<<endl;
+    if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()==true){
+        decide4:
+        cout<<"Who do you want to verify?";
+        cin>>verify;
+        if(verify<1 || verify>numPlayers){
+            cout<<"Not a valid player!"<<endl;
+            goto decide4;
+        }
+        string id=Players[verify-1].get_identity();
+        if(id=="Wolverine"){
+            cout<<"Player "<<verify<<" is bad."<<endl;
+        }else{
+            cout<<"Player "<<verify<<" is good."<<endl;
+        }   
     }else{
-        cout<<"Player "<<verify<<" is good."<<endl;
+        cout<<"Who do you want to verify?";
+        system("sleep 2");
+        cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
+    
     cout<<"Close your eyes..."<<endl;
       
     lognight(Players,killed1,killed2,guard,verify,day);
@@ -354,10 +361,18 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     }
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
-    }else if(killed2==0){
-        cout<<"Player "<<killed1<<" dead!"<<endl;
     }else{
-        cout<<"Player "<<killed1<<" and "<<killed2<<" dead!"<<endl;
+        if(killed1>killed2){
+            int temp;
+            temp=killed2;
+            killed2=killed1;
+            killed1=temp;
+        }
+        if(killed2==0){
+            cout<<"Player "<<killed1<<" dead!"<<endl;
+        }else{
+            cout<<"Player "<<killed1<<" and "<<killed2<<" dead!"<<endl;
+        }
     }
 
     //Check if the game should end (all wolverines/villagers/powers dead)
@@ -459,6 +474,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         return;
         
     logday(Players,playerChosen,day);
+    killed1=0;killed2=0;
 }
 
 bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers){
