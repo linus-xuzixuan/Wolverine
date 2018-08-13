@@ -100,4 +100,9 @@ void logover(int reason){
     fout<<"Game over."<<endl;
 }
 
+void endfile(){
+    fout<<"---Program ended properly---"<<endl;
+    fout.close();
+}
+
 #endif //LOGGER_H

@@ -118,6 +118,8 @@ int main(void){
             }
         }
     }
+
+    fin.close();
     system("sleep 2");
     setIdentity(numWolverines,numVillagers,PowerCount,Players,Present);
     system("clear");
@@ -141,7 +143,7 @@ int main(void){
         startDay(Players,killed1,killed2,hunter,numPlayers);
     }
     
-    fin.close();
+    endfile();
     return 0;
 }
 
