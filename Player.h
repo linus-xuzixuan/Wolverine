@@ -12,9 +12,12 @@ class Player{
 	string set_id(int id);
 	bool get_state() const;
 	string get_identity() const;
+	void guard();
+	bool get_shield() const;
 	private:
 	bool state;
 	string identity;
+	bool guarded;
 };
 
 void Player::set_life(bool new_state){
@@ -50,6 +53,14 @@ string Player::get_identity() const{
 
 bool Player::get_state() const{
 	return state;
+}
+
+bool Player::get_shield() const{
+	return guarded;
+}
+
+void Player::guard(){
+	guarded=true;
 }
 
 #endif //PLAYER_H
