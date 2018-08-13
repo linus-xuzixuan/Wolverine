@@ -32,7 +32,7 @@ int numPowers;
 int killed1=0,killed2=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
-void startNight(Player Players[]);
+void startNight(Player Players[],int numPlayers);
 void startDay(Player Players[],int result1,int result2,int hunter);
 
 int main(void){
@@ -113,6 +113,7 @@ int main(void){
     }
 
     setIdentity(numWolverines,numVillagers,PowerCount,Players,Present);
+    Execute("./Clean.bash");
 
     cout<<"Type anything to start identity confirmation:";
     cin>>spam;
@@ -124,12 +125,11 @@ int main(void){
         cin>>spam;
         Execute("./Clean.bash");
     }
-
     cout<<"End of identity confirmation."<<endl;
     system("sleep 5");
 
     while(!gameOver){
-        startNight(Players);
+        startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter);
     }
     
@@ -170,7 +170,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
     logid(Wolverines,Power,Villagers,Players);
 }
 
-void startNight(Player Players[]){
+void startNight(Player Players[],int numPlayers){
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
     system("sleep 5");
@@ -192,7 +192,7 @@ void startNight(Player Players[]){
 
     cout<<"Player "<<playerchosen<<", is that right?";
     cin>>choice;
-    if(choice!='Y' || choice!='y')
+    if(choice!='Y' && choice!='y')
         goto decide;
 
     Players[playerchosen-1].set_life(0);
@@ -239,7 +239,7 @@ void startNight(Player Players[]){
             }
             cout<<"Player "<<playerchosen<<", is that right?";
             cin>>choice;
-            if(choice!='Y' || choice!='y'){
+            if(choice!='Y' && choice!='y'){
                 goto decide31;
             }
             Players[playerchosen-1].set_life(0);
@@ -376,7 +376,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
     }else{
         cout<<"Player "<<playerChosen<<", is that right?";
         cin>>choice;
-        if(choice!='Y' || choice!='y')
+        if(choice!='Y' && choice!='y')
             goto decide4;
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
