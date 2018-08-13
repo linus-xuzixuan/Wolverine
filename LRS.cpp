@@ -344,7 +344,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         if(Players[i].get_state()==0){
             if(Players[i].get_identity()=="Wolverine"){
                 wolverineLeft-=1;
-            }else if(Players[i].get_identity()=="Wolverine"){
+            }else if(Players[i].get_identity()=="Villager"){
                 villagerLeft-=1;
             }else{
                 powerLeft-=1;

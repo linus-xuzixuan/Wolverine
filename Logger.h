@@ -51,7 +51,7 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
 
     //Logging Witch's poison (if any)
     if(killed2!=0){
-        fout<<"Witch poisoned Player "<<killed2<<endl;
+        fout<<"Witch poisoned Player "<<killed2<<"."<<endl;
     }
 
     //Logging Predictor's verification
