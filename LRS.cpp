@@ -133,6 +133,7 @@ int main(void){
     system("sleep 3");
 
     while(!over){
+        day+=1;
         startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter,numPlayers);
     }
@@ -321,7 +322,7 @@ void startNight(Player Players[],int numPlayers){
     }
     cout<<"Close your eyes..."<<endl;
       
-    lognight(Players,killed1,killed2,guard,verify);
+    lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
     system("clear");
 }
@@ -438,7 +439,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
         return;
         
-    logday(Players,playerChosen);
+    logday(Players,playerChosen,day);
 }
 
 bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers){

@@ -31,7 +31,8 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     fout<<endl;
 }
 
-void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
+void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int day){
+    fout<<"Night "<<day<<endl;
     //Logging guard's guard
     if(guard>=0){
         if(guard==0){
@@ -65,7 +66,7 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify){
     fout<<endl;
 }
 
-void logday(Player Players[],int votekill){
+void logday(Player Players[],int votekill,int day){
     if(votekill!=0){
         fout<<"Player "<<votekill<<" was voted out."<<endl;
     }else{
