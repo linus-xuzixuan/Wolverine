@@ -31,6 +31,7 @@ int numVillagers;
 int numPowers;
 bool guardpresent=0;
 int killed1=0,killed2=0;
+int day=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
 void startNight(Player Players[],int numPlayers);
@@ -467,7 +468,6 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             cout<<"All powers dead. Game over."<<endl;
             logover(3);
         }
-        fout<<"Game over."<<endl;
         over=true;
         return true;
     }else{
