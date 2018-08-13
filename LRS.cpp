@@ -23,7 +23,7 @@ string spam; //For all kinds of pauses
 bool over=0;
 bool hunterfired=0;
 bool saveused=0;
-int hunter=0;
+int hunter=-1;
 int numPlayers;
 char choice;
 int numWolverines;
@@ -434,6 +434,8 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         }
     }
 
+    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
+        return;
     logday(Players,playerChosen);
 }
 
