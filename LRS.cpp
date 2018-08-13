@@ -20,6 +20,7 @@ using namespace std;
 
 ifstream fin;
 string spam; //For all kinds of pauses
+bool over=0;
 bool hunterfired=0;
 bool saveused=0;
 int hunter=0;
@@ -130,7 +131,7 @@ int main(void){
     cout<<"End of identity confirmation."<<endl;
     system("sleep 3");
 
-    while(checkover(Players,numWolverines,numVillagers,numPowers)==false){
+    while(!over){
         startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter,numPlayers);
     }
@@ -368,6 +369,8 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
             Players[target-1].set_life(0);
             loghunter(Players,target);
         }
+        if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
+            return;
     }
 
     nohunter:
@@ -447,14 +450,21 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             }
         }
     }
-    if(wolverineLeft==0){
-        cout<<"All wolverines dead. Game over."<<endl;
-        return true;
-    }else if(villagerLeft==0){
-        cout<<"All villagers dead. Game over."<<endl;
-        return true;
-    }else if(powerLeft==0){
-        cout<<"All powers dead. Game over."<<endl;
+    if(wolverineLeft*villagerLeft*powerLeft==0){
+        if(wolverineLeft==0){
+            cout<<"All wolverines dead. Game over."<<endl;
+            logover(1);
+        }
+        if(villagerLeft==0){
+            cout<<"All villagers dead. Game over."<<endl;
+            logover(2);
+        }
+        if(powerLeft==0){
+            cout<<"All powers dead. Game over."<<endl;
+            logover(3);
+        }
+        fout<<"Game over."<<endl;
+        over=true;
         return true;
     }else{
         return false;

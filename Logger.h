@@ -79,4 +79,17 @@ void loghunter(Player Players[],int hunterkill){
     fout<<endl;
 }
 
+void logover(int reason){
+    switch(reason){
+        case 1:
+        fout<<"All wolverines dead. ";
+        break;
+        case 2:
+        fout<<"All villagers dead. ";
+        break;
+        case 3:
+        fout<<"All powers dead. ";
+    }
+}
+
 #endif //LOGGER_H
