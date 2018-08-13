@@ -20,7 +20,7 @@ LRS.cpp: Main program.
 
 Logger.h: Implementations of logging functions.
 
-About Distrib.lrs
+## About Distrib.lrs
 
 This version of Distrib.lrs will be the standard, and PRs concerning additions will be welcome.
 
