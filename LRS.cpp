@@ -182,6 +182,7 @@ void startNight(Player Players[],int numPlayers){
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
     system("sleep 3");
+    system("clear");
 
     //Guard's turn
     int guard=-1;
@@ -326,7 +327,7 @@ void startNight(Player Players[],int numPlayers){
     //Predictor's turn
     int verify;
     cout<<"Predictor!"<<endl;
-    if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()==true){
+    if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()!=0){
         decide4:
         cout<<"Who do you want to verify?";
         cin>>verify;
@@ -468,7 +469,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         if(target==0){
             cout<<"Abandoned."<<endl;
         }else{
-            cout<<"Player "<<target<<" killed.";
+            cout<<"Player "<<target<<" killed."<<endl;
             Players[target-1].set_life(0);
             loghunter(Players,target);
         }
