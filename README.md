@@ -3,9 +3,9 @@ Directly remoted from my MacBook Pro.
 
 This is a C++ program for "狼人杀" in Chinese. I don't really know how to translate this name correctly.
 
-Warning: This program should not be used under current version.
+Warning: This program is now only functional for 6-player mode.
 
-Branch master is currently paused.
+The logger is now complete and has been embedded into master. Work on master resumed.
 
 File information:
 
@@ -18,3 +18,5 @@ Execute.h: Open a specified file. Co-operates with clean.bash. Also will probabl
 Player.h: Interface and implementation for class Player.
 
 LRS.cpp: Main program.
+
+Logger.h: Implementations of logging functions.
