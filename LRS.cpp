@@ -216,7 +216,7 @@ void startNight(Player Players[],int numPlayers){
             system("sleep 2");
             cout<<"You don't seem to have a choice, as you are dead."<<endl;
         }
-        system("say close your eyes");
+        cout<<"Close your eyes..."<<endl;
         system("sleep 3");
         system("clear");
     }
