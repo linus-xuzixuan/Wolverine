@@ -31,7 +31,7 @@ int numPowers;
 int killed1=0,killed2=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
-void startNight(Player Players[]);
+void startNight(Player Players[],int numPlayers);
 void startDay(Player Players[],int result1,int result2,int hunter);
 
 int main(void){
@@ -111,23 +111,23 @@ int main(void){
     }
 
     setIdentity(numWolverines,numVillagers,PowerCount,Players,Present);
+    Execute("./Clean.bash");
 
     cout<<"Type anything to start identity confirmation:";
     cin>>spam;
     for(int j=0;j<numPlayers;j++){
         cout<<"Player "<<(j+1)<<", type something:";
         cin>>spam;
-        cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity();
+        cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity()<<endl;
         cout<<"Type anything for confirmation:";
         cin>>spam;
         Execute("./Clean.bash");
     }
-
     cout<<"End of identity confirmation."<<endl;
     system("sleep 5");
 
     while(!gameOver){
-        startNight(Players);
+        startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter);
     }
     
@@ -167,7 +167,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
     }
 }
 
-void startNight(Player Players[]){
+void startNight(Player Players[],int numPlayers){
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
     system("sleep 5");
@@ -178,23 +178,23 @@ void startNight(Player Players[]){
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
 
-    if(Players[playerchosen-1].get_state()==0){
-        cout<<"Already dead!"<<endl;
-        goto decide;
-    }
     if(playerchosen<1 || playerchosen>numPlayers){
         cout<<"Not a valid player!"<<endl;
+        goto decide;
+    }
+    if(Players[playerchosen-1].get_state()==0){
+        cout<<"Already dead!"<<endl;
         goto decide;
     }
 
     cout<<"Player "<<playerchosen<<", is that right?";
     cin>>choice;
-    if(choice!='Y' || choice!='y')
+    if(choice!='Y' && choice!='y')
         goto decide;
 
     Players[playerchosen-1].set_life(0);
     killed1=playerchosen;
-    cout<<"Ok, Player "<<playerchosen<<" dead, at least for now...";
+    cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
     Execute("./Clean.bash");
 
@@ -236,7 +236,7 @@ void startNight(Player Players[]){
             }
             cout<<"Player "<<playerchosen<<", is that right?";
             cin>>choice;
-            if(choice!='Y' || choice!='y'){
+            if(choice!='Y' && choice!='y'){
                 goto decide31;
             }
             Players[playerchosen-1].set_life(0);
@@ -245,7 +245,7 @@ void startNight(Player Players[]){
             cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
         }
     }else if(choice=='N' || choice=='n'){
-        cout<<"Ok. Nobody poisoned."<<endl;
+        cout<<"Ok, nobody poisoned."<<endl;
     }else{
         cout<<"Not a valid decision!"<<endl;
         goto decide3;
@@ -270,7 +270,6 @@ void startNight(Player Players[]){
         cout<<"Player "<<verify<<" is good."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
-
     system("sleep 5");
 }
 
@@ -366,13 +365,13 @@ void startDay(Player Players[],int result1,int result2,int hunter){
     if(playerChosen==0){
         cout<<"Peace, are you sure?";
         cin>>choice;
-        if(choice!='Y' || choice!='y')
+        if(choice!='Y' && choice!='y')
             goto decide4;
         cout<<"Ok, peace today.";
     }else{
         cout<<"Player "<<playerChosen<<", is that right?";
         cin>>choice;
-        if(choice!='Y' || choice!='y')
+        if(choice!='Y' && choice!='y')
             goto decide4;
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
