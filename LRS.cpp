@@ -197,7 +197,7 @@ void startNight(Player Players[],int numPlayers){
 
     Players[playerchosen-1].set_life(0);
     killed1=playerchosen;
-    cout<<"Ok, Player "<<playerchosen<<" dead, at least for now...";
+    cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
     Execute("./Clean.bash");
 
@@ -248,7 +248,7 @@ void startNight(Player Players[],int numPlayers){
             cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
         }
     }else if(choice=='N' || choice=='n'){
-        cout<<"Ok. Nobody poisoned."<<endl;
+        cout<<"Ok, nobody poisoned."<<endl;
     }else{
         cout<<"Not a valid decision!"<<endl;
         goto decide3;
@@ -370,7 +370,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
     if(playerChosen==0){
         cout<<"Peace, are you sure?";
         cin>>choice;
-        if(choice!='Y' || choice!='y')
+        if(choice!='Y' && choice!='y')
             goto decide4;
         cout<<"Ok, peace today.";
     }else{
