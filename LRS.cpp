@@ -1,7 +1,7 @@
 /* LRS.cpp
 By Linus Xu (linus-xuzixuan on GitHub)
 Note: "power" here means “神” in the Chinese game.
-This version currently works on Unix-based systems only as clean.bash is literally a bash file.
+This version currently works on Unix-based systems only as "clear" is a Shell command.
 */
 #define W 0 //Witch
 #define P 1 //Predictor
