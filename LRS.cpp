@@ -91,7 +91,7 @@ int main(void){
     }
     char Power[PowerCount];
     for(int i=0;i<PowerCount;i++){
-        for(fin>>Power[0];Power[0]!='\n';fin.get(Power[0])){
+        for(fin>>Power[i];Power[0]!='\n';fin.get(Power[0])){
             if(Power[i]==' '){
                 continue;
             }else if(Power[i]=='W'){
@@ -173,6 +173,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
 }
 
 void startNight(Player Players[],int numPlayers){
+    clear_guard(Players,numPlayers);
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
     system("sleep 3");
@@ -330,7 +331,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         killed2=0;
     }
     if(killed1==0){
-        system("say no one killed last night");
+        cout<<"No one killed last night."<<endl;
     }else if(killed2==0){
         cout<<"Player "<<killed1<<" dead!"<<endl;
     }else{
