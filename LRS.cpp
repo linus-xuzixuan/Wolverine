@@ -23,6 +23,7 @@ ifstream fin;
 string spam; //For all kinds of pauses
 bool gameOver=0;
 bool hunterfired=0;
+bool saveused=0;
 int hunter;
 int numPlayers;
 char choice;
@@ -208,15 +209,19 @@ void startNight(Player Players[],int numPlayers){
     decide2:
     cout<<"Player "<<playerchosen<<" dead, rescue?";
     cin>>choice;
-    if(choice=='Y' || choice=='y'){
-        Players[playerchosen-1].set_life(1);
-        rescue=true;killed1*=-1;
-        cout<<"Ok, rescued."<<endl;
-    }else if(choice=='N' || choice=='n'){
-        cout<<"Ok, he (she?) is dead."<<endl;
+    if(saveused){
+        cout<<"Not valid. You have used your rescue."<<endl;
     }else{
-        cout<<"Not a valid decision!"<<endl;
-        goto decide2;
+        if(choice=='Y' || choice=='y'){
+            Players[playerchosen-1].set_life(1);
+            rescue=true;killed1*=-1;saveused=1;
+            cout<<"Ok, rescued."<<endl;
+        }else if(choice=='N' || choice=='n'){
+            cout<<"Ok, he (she?) is dead."<<endl;
+        }else{
+            cout<<"Not a valid decision!"<<endl;
+            goto decide2;
+        }
     }
     system("sleep 2");
     cout<<"Do you want to use poison?";
@@ -224,7 +229,7 @@ void startNight(Player Players[],int numPlayers){
     cin>>choice;
     if(choice=='Y' || choice=='y'){
         if(rescue){
-            cout<<"Not valid. You have rescued someone.";
+            cout<<"Not valid. You have rescued someone."<<endl;
         }else{
             decide31:
             cout<<"Who?";
