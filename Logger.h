@@ -90,6 +90,7 @@ void logover(int reason){
         case 3:
         fout<<"All powers dead. ";
     }
+    fout<<"Game over."<<endl;
 }
 
 #endif //LOGGER_H
