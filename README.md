@@ -6,8 +6,7 @@ Warning: This program is now only functional for 6-player mode.
 
 The logger is now complete and has been embedded into master. Work on master resumed.
 
-
-## File information:
+## File information
 
 Clean.bash: A command to clear the screen. Will probably be deprecated later.
 
@@ -21,6 +20,7 @@ LRS.cpp: Main program.
 
 Logger.h: Implementations of logging functions.
 
+About Distrib.lrs
 
 This version of Distrib.lrs will be the standard, and PRs concerning additions will be welcome.
 
@@ -33,7 +33,7 @@ Inside "Presence of powers", W, P, H, G each for Witch, Predictor, Hunter, and G
 The number of players should be put in a increasing order one by one, with no blank lines in between.
 
 
-## Error code solutions:
+## Error code solutions
 
 1: Enter a correct number of players (currently between 6 and 12)
 
