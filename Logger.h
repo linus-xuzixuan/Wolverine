@@ -67,6 +67,7 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
 }
 
 void logday(Player Players[],int votekill,int day){
+    fout<<"Day "<<day<<endl;
     if(votekill!=0){
         fout<<"Player "<<votekill<<" was voted out."<<endl;
     }else{
