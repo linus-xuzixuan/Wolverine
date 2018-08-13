@@ -6,6 +6,8 @@ Warning: This program is now only functional for 6-player mode.
 
 The logger is now complete and has been embedded into master. Work on master resumed.
 
+Speech branch is meant to convert most of printings into speech, using macOS's "say" command.
+
 ## File information
 
 Clean.bash: A command to clear the screen. Will probably be deprecated later.
