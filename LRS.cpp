@@ -33,7 +33,7 @@ int killed1=0,killed2=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
 void startNight(Player Players[],int numPlayers);
-void startDay(Player Players[],int result1,int result2,int hunter);
+void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers);
 
 int main(void){
     int numPlayers;
@@ -130,7 +130,7 @@ int main(void){
 
     while(!gameOver){
         startNight(Players,numPlayers);
-        startDay(Players,killed1,killed2,hunter);
+        startDay(Players,killed1,killed2,hunter,numPlayers);
     }
     
     fin.close();
@@ -254,9 +254,10 @@ void startNight(Player Players[],int numPlayers){
         goto decide3;
     }
     cout<<"Close your eyes..."<<endl;
+    system("sleep 5");
+    Execute("./Clean.bash");
 
     //Predictor's turn
-    system("sleep 5");
     int verify;
     cout<<"Predictor!"<<endl;
     decide4:
@@ -275,9 +276,10 @@ void startNight(Player Players[],int numPlayers){
     cout<<"Close your eyes..."<<endl;
     lognight(Players,killed1,killed2,verify);
     system("sleep 5");
+    Execute("./Clean.bash");
 }
 
-void startDay(Player Players[],int result1,int result2,int hunter){
+void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
     if(killed1<0){
         killed1=killed2;
