@@ -172,11 +172,11 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
 
 void startNight(Player Players[],int numPlayers){
     int playerchosen;
-    cout<<"Close your eyes please..."<<endl;
+    system("say close your eyes please");
     system("sleep 5");
 
     //Wolverine's turn
-    cout<<"Wolverines!"<<endl;
+    system("say wolverines");
     decide:
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
@@ -198,7 +198,7 @@ void startNight(Player Players[],int numPlayers){
     Players[playerchosen-1].set_life(0);
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
-    cout<<"Close your eyes..."<<endl;
+    system("say close your eyes");
     system("clear");
 
     //Witch's turn
