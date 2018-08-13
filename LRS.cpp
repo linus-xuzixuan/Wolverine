@@ -47,14 +47,14 @@ int main(void){
     cin>>numPlayers;
 
     if (numPlayers<6 || numPlayers>12){
-        cout<<"Not a valid player number"<<endl;
+        cout<<"Not a valid player number."<<endl;
         return 1;
     }
     Player Players[numPlayers];
     
     fin.open("./Distrib.lrs");
     if(fin.fail()){
-        cout<<"Error: Distribution file not found"<<endl;
+        cout<<"Error: Distribution file not found."<<endl;
         return 2;
     }
 
@@ -63,10 +63,11 @@ int main(void){
     int comp;
     fin>>comp;
     if(comp!=numPlayers){
-        cout<<"Error: Distribution file corrupt"<<endl;
+        cout<<"Error: Distribution file corrupt."<<endl;
         return 3;
     }
 
+    system("clear");
     fin>>numWolverines;
     cout<<"Wolverine count:"<<numWolverines<<endl;
     fin>>numVillagers;
@@ -179,7 +180,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
 void startNight(Player Players[],int numPlayers){
     clear_guard(Players,numPlayers);
     int playerchosen;
-    cout<<"Close your eyes please..."<<endl;
+    system("say close your eyes please");
     system("sleep 3");
 
     //Guard's turn
@@ -215,13 +216,13 @@ void startNight(Player Players[],int numPlayers){
             system("sleep 2");
             cout<<"You don't seem to have a choice, as you are dead."<<endl;
         }
-        cout<<"Close your eyes..."<<endl;
+        system("say close your eyes");
         system("sleep 3");
         system("clear");
     }
 
     //Wolverine's turn
-    cout<<"Wolverines!"<<endl;
+    system("say wolverines");
     decide:
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
@@ -245,13 +246,13 @@ void startNight(Player Players[],int numPlayers){
     }
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
-    cout<<"Close your eyes..."<<endl;
+    system("say close your eyes");
     system("sleep 3");
     system("clear");
 
     //Witch's turn
     bool rescue=0;
-    cout<<"Witch!"<<endl;
+    system("say witch");
     if(Players[findplayer(Players,"Witch",numPlayers)].get_state()==true){
         decide2:
         cout<<"Player "<<playerchosen<<" dead, rescue?";
@@ -318,13 +319,13 @@ void startNight(Player Players[],int numPlayers){
         system("sleep 2");
         cout<<"Still no choice."<<endl;
     }
-    cout<<"Close your eyes..."<<endl;
+    system("say close your eyes");
     system("sleep 3");
     system("clear");
 
     //Predictor's turn
     int verify;
-    cout<<"Predictor!"<<endl;
+    system("say predictor")
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()==true){
         decide4:
         cout<<"Who do you want to verify?";
@@ -344,8 +345,7 @@ void startNight(Player Players[],int numPlayers){
         system("sleep 2");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
-    
-    cout<<"Close your eyes..."<<endl;
+    system("say close your eyes");
       
     lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
