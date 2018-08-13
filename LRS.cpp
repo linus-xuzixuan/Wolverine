@@ -325,7 +325,7 @@ void startNight(Player Players[],int numPlayers){
 
     //Predictor's turn
     int verify;
-    system("say predictor")
+    system("say predictor");
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()==true){
         decide4:
         cout<<"Who do you want to verify?";
