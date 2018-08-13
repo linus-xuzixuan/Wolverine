@@ -23,6 +23,7 @@ string spam; //For all kinds of pauses
 bool over=0;
 bool hunterfired=0;
 bool saveused=0;
+bool poisonused=0;
 int hunter=-1;
 int numPlayers;
 char choice;
@@ -258,10 +259,10 @@ void startNight(Player Players[],int numPlayers){
         decide2:
         cout<<"Player "<<playerchosen<<" dead, rescue?";
         cin>>choice;
-        if(saveused){
-            cout<<"Not valid. You have used your rescue."<<endl;
-        }else{
-            if(choice=='Y' || choice=='y'){
+        if(choice=='Y' || choice=='y'){
+            if(saveused){
+                cout<<"Not valid. You have used your rescue."<<endl;
+            }else{
                 Players[playerchosen-1].set_life(1);
                 rescue=true;killed1*=-1;saveused=1;
                 cout<<"Ok, rescued."<<endl;
@@ -269,12 +270,12 @@ void startNight(Player Players[],int numPlayers){
                     Players[playerchosen-1].set_life(0);
                     killed1=playerchosen;
                 }
-            }else if(choice=='N' || choice=='n'){
-                cout<<"Ok, he (she?) is probably dead."<<endl;
-            }else{
-                cout<<"Not a valid decision!"<<endl;
-                goto decide2;
             }
+        }else if(choice=='N' || choice=='n'){
+                cout<<"Ok, he (she?) is probably dead."<<endl;
+        }else{
+            cout<<"Not a valid decision!"<<endl;
+            goto decide2;
         }
         system("sleep 2");
         decide3:
@@ -283,7 +284,10 @@ void startNight(Player Players[],int numPlayers){
         if(choice=='Y' || choice=='y'){
             if(rescue){
                 cout<<"Not valid. You have rescued someone in this turn."<<endl;
+            }else if(poisonused){
+                cout<<"Not valid. You have used your poison."<<endl;
             }else{
+                poisonused=true;
                 decide31:
                 cout<<"Who?";
                 cin>>playerchosen;
@@ -441,7 +445,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         cin>>choice;
         if(choice!='Y' && choice!='y')
             goto decide4;
-        cout<<"Ok, peace today.";
+        cout<<"Ok, peace today."<<endl;
     }else{
         cout<<"Player "<<playerChosen<<", is that right?";
         cin>>choice;
