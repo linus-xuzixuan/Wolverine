@@ -28,6 +28,7 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     for(int i=0;i<numWolverines+numPowers+numVillagers;i++){
         fout<<"Player "<<i+1<<" is a "<<Players[i].get_identity()<<"."<<endl;
     }
+    fout<<endl;
 }
 
 void lognight(Player Players[],int killed1,int killed2,int verify){
@@ -52,6 +53,7 @@ void lognight(Player Players[],int killed1,int killed2,int verify){
     }else{
         fout<<", who is good."<<endl;
     }
+    fout<<endl;
 }
 
 void logday(Player Players[],int votekill){
@@ -60,10 +62,12 @@ void logday(Player Players[],int votekill){
     }else{
         fout<<"Peace today."<<endl;
     }
+    fout<<endl;
 }
 
 void loghunter(Player Players[],int hunterkill){
     fout<<"Hunter shot Player "<<hunterkill<<"."<<endl;
+    fout<<endl;
 }
 
 #endif //LOGGER_H
