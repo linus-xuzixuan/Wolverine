@@ -274,12 +274,12 @@ void startNight(Player Players[],int numPlayers){
             decide31:
             cout<<"Who?";
             cin>>playerchosen;
-            if(Players[playerchosen-1].get_state()==0){
-                cout<<"Already dead!"<<endl;
-                goto decide31;
-            }
             if(playerchosen<1 || playerchosen>numPlayers){
                 cout<<"Not a valid player!"<<endl;
+                goto decide31;
+            }
+            if(Players[playerchosen-1].get_state()==0){
+                cout<<"Already dead!"<<endl;
                 goto decide31;
             }
             cout<<"Player "<<playerchosen<<", is that right?";
