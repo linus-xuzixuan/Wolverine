@@ -209,14 +209,13 @@ void startNight(Player Players[],int numPlayers){
                 guard=playerchosen;
                 cout<<"Ok, he (she?) is likely to be safe tonight."<<endl;
             }
-            cout<<"Close your eyes..."<<endl;
-
         }else{
             cout<<"Guard!"<<endl;
             cout<<"Who do you want to protect tonight (0 for abandon)?"<<endl;
             system("sleep 2");
             cout<<"You don't seem to have a choice, as you are dead."<<endl;
         }
+        cout<<"Close your eyes..."<<endl;
         system("sleep 3");
         system("clear");
     }
