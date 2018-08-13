@@ -353,12 +353,12 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         hunterfire:
         cout<<"Target (0 for abandon):";
         cin>>target;
-        if(Players[target-1].get_state()==0){
-            cout<<"Already dead!"<<endl;
-            goto hunterfire;
-        }
         if(target<0 || target>numPlayers){
             cout<<"Not a valid player!"<<endl;
+            goto hunterfire;
+        }
+        if(Players[target-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
             goto hunterfire;
         }
         if(target==0){
@@ -384,12 +384,12 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     decide4:
     cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
     cin>>playerChosen;
-    if(Players[playerChosen-1].get_state()==0){
-        cout<<"Already dead!"<<endl;
-        goto decide4;
-    }
     if(playerChosen<0 || playerChosen>numPlayers){
         cout<<"Not a valid player!"<<endl;
+        goto decide4;
+    }
+    if(Players[playerChosen-1].get_state()==0){
+        cout<<"Already dead!"<<endl;
         goto decide4;
     }
     if(playerChosen==0){
@@ -414,12 +414,12 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         hunterfire2:
         cout<<"Target (0 for abandon):";
         cin>>target;
-        if(Players[target-1].get_state()==0){
-            cout<<"Already dead!"<<endl;
-            goto hunterfire2;
-        }
         if(target<0 || target>numPlayers){
             cout<<"Not a valid player!"<<endl;
+            goto hunterfire2;
+        }
+        if(Players[target-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
             goto hunterfire2;
         }
         if(target==0){
@@ -436,7 +436,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
 
 bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers){
     int wolverineLeft=numWolverines,villagerLeft=numVillagers,powerLeft=numPowers;
-    for(int i=0;i<numPlayers;i++){
+    for(int i=0;i<numWolverines+numVillagers+numPowers;i++){
         if(Players[i].get_state()==0){
             if(Players[i].get_identity()=="Wolverine"){
                 wolverineLeft-=1;
@@ -450,14 +450,13 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
     if(wolverineLeft==0){
         cout<<"All wolverines dead. Game over."<<endl;
         return true;
-    }
-    if(villagerLeft==0){
+    }else if(villagerLeft==0){
         cout<<"All villagers dead. Game over."<<endl;
         return true;
-    }
-    if(powerLeft==0){
+    }else if(powerLeft==0){
         cout<<"All powers dead. Game over."<<endl;
         return true;
+    }else{
+        return false;
     }
-    return false;
 }
