@@ -14,7 +14,6 @@ This version currently works on Unix-based systems only as clean.bash is literal
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Execute.h"
 #include "Player.h"
 #include "Logger.h"
 using namespace std;
@@ -114,7 +113,7 @@ int main(void){
     }
 
     setIdentity(numWolverines,numVillagers,PowerCount,Players,Present);
-    Execute("./Clean.bash");
+    system("clear");
 
     cout<<"Type anything to start identity confirmation:";
     cin>>spam;
@@ -124,7 +123,7 @@ int main(void){
         cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity()<<endl;
         cout<<"Type anything for confirmation:";
         cin>>spam;
-        Execute("./Clean.bash");
+        system("clear");
     }
     cout<<"End of identity confirmation."<<endl;
     system("sleep 5");
@@ -200,7 +199,7 @@ void startNight(Player Players[],int numPlayers){
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
-    Execute("./Clean.bash");
+    system("clear");
 
     //Witch's turn
     system("sleep 5");
@@ -260,7 +259,7 @@ void startNight(Player Players[],int numPlayers){
     }
     cout<<"Close your eyes..."<<endl;
     system("sleep 5");
-    Execute("./Clean.bash");
+    system("clear");
 
     //Predictor's turn
     int verify;
@@ -282,7 +281,7 @@ void startNight(Player Players[],int numPlayers){
       
     lognight(Players,killed1,killed2,verify);
     system("sleep 5");
-    Execute("./Clean.bash");
+    system("clear");
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
