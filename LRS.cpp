@@ -436,6 +436,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
 
     if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
         return;
+        
     logday(Players,playerChosen);
 }
 
