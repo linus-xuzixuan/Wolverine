@@ -180,7 +180,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
 void startNight(Player Players[],int numPlayers){
     clear_guard(Players,numPlayers);
     int playerchosen;
-    system("say close your eyes please");
+    cout<<"Close your eyes please..."<<endl;
     system("sleep 3");
 
     //Guard's turn
@@ -222,7 +222,7 @@ void startNight(Player Players[],int numPlayers){
     }
 
     //Wolverine's turn
-    system("say wolverines");
+    cout<<"Wolverines!"<<endl;
     decide:
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
@@ -246,13 +246,13 @@ void startNight(Player Players[],int numPlayers){
     }
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
-    system("say close your eyes");
+    cout<<"Close your eyes..."<<endl;
     system("sleep 3");
     system("clear");
 
     //Witch's turn
     bool rescue=0;
-    system("say witch");
+    cout<<"Witch!"<<endl;
     if(Players[findplayer(Players,"Witch",numPlayers)].get_state()==true){
         decide2:
         cout<<"Player "<<playerchosen<<" dead, rescue?";
@@ -319,13 +319,13 @@ void startNight(Player Players[],int numPlayers){
         system("sleep 2");
         cout<<"Still no choice."<<endl;
     }
-    system("say close your eyes");
+    cout<<"Close your eyes..."<<endl;
     system("sleep 3");
     system("clear");
 
     //Predictor's turn
     int verify;
-    system("say predictor");
+    cout<<"Predictor!"<<endl;
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()==true){
         decide4:
         cout<<"Who do you want to verify?";
@@ -345,7 +345,7 @@ void startNight(Player Players[],int numPlayers){
         system("sleep 2");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
-    system("say close your eyes");
+    cout<<"Close your eyes..."<<endl;
       
     lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
