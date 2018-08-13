@@ -6,8 +6,6 @@ Warning: This program is now only functional for 6-player mode.
 
 The logger is now complete and has been embedded into master. Work on master resumed.
 
-Speech branch is meant to convert most of printings into speech, using the macOS "say" command.
-
 ## File information
 
 Clean.bash and Execute.h have been deprecated.
@@ -26,7 +24,7 @@ This version of Distrib.lrs will be the standard, and PRs concerning additions w
 
 Basic format:
 
-<Total number of players> <Number of wolverines> <Number of villagers> <Presence of powers>
+x(Total number of players) x(Number of wolverines) x(Number of villagers) [W][P][H][G](Presence of powers)
   
 Inside "Presence of powers", W, P, H, G each for Witch, Predictor, Hunter, and Guard. Add one space between each.
 
