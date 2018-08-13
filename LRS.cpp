@@ -20,7 +20,6 @@ using namespace std;
 
 ifstream fin;
 string spam; //For all kinds of pauses
-bool gameOver=0;
 bool hunterfired=0;
 bool saveused=0;
 int hunter=0;
@@ -35,6 +34,7 @@ int killed1=0,killed2=0;
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
 void startNight(Player Players[],int numPlayers);
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers);
+bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers);
 
 int main(void){
     int numPlayers;
@@ -130,7 +130,7 @@ int main(void){
     cout<<"End of identity confirmation."<<endl;
     system("sleep 3");
 
-    while(!gameOver){
+    while(checkover(Players,numWolverines,numVillagers,numPowers)==false){
         startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter,numPlayers);
     }
@@ -263,8 +263,8 @@ void startNight(Player Players[],int numPlayers){
         }
     }
     system("sleep 2");
-    cout<<"Do you want to use poison?";
     decide3:
+    cout<<"Do you want to use poison?";
     cin>>choice;
     if(choice=='Y' || choice=='y'){
         if(rescue){
@@ -339,31 +339,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     }
 
     //Check if the game should end (all wolverines/villagers/powers dead)
-    int wolverineLeft=numWolverines,villagerLeft=numVillagers,powerLeft=numPowers;
-    for(int i=0;i<numPlayers;i++){
-        if(Players[i].get_state()==0){
-            if(Players[i].get_identity()=="Wolverine"){
-                wolverineLeft-=1;
-            }else if(Players[i].get_identity()=="Villager"){
-                villagerLeft-=1;
-            }else{
-                powerLeft-=1;
-            }
-        }
-    }
-    if(wolverineLeft==0){
-        cout<<"All wolverines dead. Game over."<<endl;
-        gameOver=true;
-    }
-    if(villagerLeft==0){
-        cout<<"All villagers dead. Game over."<<endl;
-        gameOver=true;
-    }
-    if(powerLeft==0){
-        cout<<"All powers dead. Game over."<<endl;
-        gameOver=true;
-    }
-    if(gameOver)
+    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
         return;
     
     if(hunter==-1){
@@ -456,4 +432,32 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     }
 
     logday(Players,playerChosen);
+}
+
+bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers){
+    int wolverineLeft=numWolverines,villagerLeft=numVillagers,powerLeft=numPowers;
+    for(int i=0;i<numPlayers;i++){
+        if(Players[i].get_state()==0){
+            if(Players[i].get_identity()=="Wolverine"){
+                wolverineLeft-=1;
+            }else if(Players[i].get_identity()=="Villager"){
+                villagerLeft-=1;
+            }else{
+                powerLeft-=1;
+            }
+        }
+    }
+    if(wolverineLeft==0){
+        cout<<"All wolverines dead. Game over."<<endl;
+        return true;
+    }
+    if(villagerLeft==0){
+        cout<<"All villagers dead. Game over."<<endl;
+        return true;
+    }
+    if(powerLeft==0){
+        cout<<"All powers dead. Game over."<<endl;
+        return true;
+    }
+    return false;
 }
