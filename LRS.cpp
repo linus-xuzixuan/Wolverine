@@ -16,12 +16,14 @@ This version currently works on Unix-based systems only as clean.bash is literal
 #include <stdlib.h>
 #include "Execute.h"
 #include "Player.h"
+#include "Logger.h"
 using namespace std;
 
 ifstream fin;
 string spam; //For all kinds of pauses
 bool gameOver=0;
 bool hunterfired=0;
+bool saveused=0;
 int hunter;
 int numPlayers;
 char choice;
@@ -32,11 +34,12 @@ int killed1=0,killed2=0;
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
 void startNight(Player Players[],int numPlayers);
-void startDay(Player Players[],int result1,int result2,int hunter);
+void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers);
 
 int main(void){
     int numPlayers;
     
+    openfile();
     cout<<"Please enter the number of players:";
     cin>>numPlayers;
 
@@ -128,7 +131,7 @@ int main(void){
 
     while(!gameOver){
         startNight(Players,numPlayers);
-        startDay(Players,killed1,killed2,hunter);
+        startDay(Players,killed1,killed2,hunter,numPlayers);
     }
     
     fin.close();
@@ -165,6 +168,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
         }
         Left[a-1]=1;
     }
+    logid(Wolverines,Power,Villagers,Players);
 }
 
 void startNight(Player Players[],int numPlayers){
@@ -205,15 +209,19 @@ void startNight(Player Players[],int numPlayers){
     decide2:
     cout<<"Player "<<playerchosen<<" dead, rescue?";
     cin>>choice;
-    if(choice=='Y' || choice=='y'){
-        Players[playerchosen-1].set_life(1);
-        rescue=true;killed1*=-1;
-        cout<<"Ok, rescued."<<endl;
-    }else if(choice=='N' || choice=='n'){
-        cout<<"Ok, he (she?) is dead."<<endl;
+    if(saveused){
+        cout<<"Not valid. You have used your rescue."<<endl;
     }else{
-        cout<<"Not a valid decision!"<<endl;
-        goto decide2;
+        if(choice=='Y' || choice=='y'){
+            Players[playerchosen-1].set_life(1);
+            rescue=true;killed1*=-1;saveused=1;
+            cout<<"Ok, rescued."<<endl;
+        }else if(choice=='N' || choice=='n'){
+            cout<<"Ok, he (she?) is dead."<<endl;
+        }else{
+            cout<<"Not a valid decision!"<<endl;
+            goto decide2;
+        }
     }
     system("sleep 2");
     cout<<"Do you want to use poison?";
@@ -221,7 +229,7 @@ void startNight(Player Players[],int numPlayers){
     cin>>choice;
     if(choice=='Y' || choice=='y'){
         if(rescue){
-            cout<<"Not valid. You have rescued someone.";
+            cout<<"Not valid. You have rescued someone."<<endl;
         }else{
             decide31:
             cout<<"Who?";
@@ -251,9 +259,10 @@ void startNight(Player Players[],int numPlayers){
         goto decide3;
     }
     cout<<"Close your eyes..."<<endl;
+    system("sleep 5");
+    Execute("./Clean.bash");
 
     //Predictor's turn
-    system("sleep 5");
     int verify;
     cout<<"Predictor!"<<endl;
     decide4:
@@ -270,10 +279,13 @@ void startNight(Player Players[],int numPlayers){
         cout<<"Player "<<verify<<" is good."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
+      
+    lognight(Players,killed1,killed2,verify);
     system("sleep 5");
+    Execute("./Clean.bash");
 }
 
-void startDay(Player Players[],int result1,int result2,int hunter){
+void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
     if(killed1<0){
         killed1=killed2;
@@ -337,6 +349,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         }else{
             cout<<"Player "<<target<<" killed.";
             Players[target-1].set_life(0);
+            loghunter(Players,target);
         }
     }
 
@@ -347,7 +360,7 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         if(Players[j].get_state()==1)
             break;
     }
-    cout<<"Please speak, starting from Player "<<j<<endl;
+    cout<<"Please speak, starting from Player "<<j+1<<endl;
 
     //End of the day
     int playerChosen;
@@ -376,4 +389,6 @@ void startDay(Player Players[],int result1,int result2,int hunter){
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
     }
+
+    logday(Players,playerChosen);
 }
