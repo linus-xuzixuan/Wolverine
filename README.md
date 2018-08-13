@@ -10,11 +10,9 @@ Speech branch is meant to convert most of printings into speech, using macOS's "
 
 ## File information
 
-Clean.bash: A command to clear the screen. Will probably be deprecated later.
+Clean.bash and Execute.h have been deprecated.
 
 Distrib.lrs: Records the number of different identities for different numbers of players. Will be updated after I complete the remaining code on other files.
-
-Execute.h: Open a specified file. Co-operates with clean.bash. Also will probably be deprecated later.
 
 Player.h: Interface and implementation for class Player.
 
