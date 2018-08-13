@@ -2,7 +2,7 @@
 
 This is a C++ program for "狼人杀" in Chinese. I don't really know how to translate this name correctly.
 
-Warning: This program is now only functional for 6-player mode.
+Warning: This program is now only functional for 6, 9, or 12 players.
 
 The logger is now complete and has been embedded into master. Work on master resumed.
 
