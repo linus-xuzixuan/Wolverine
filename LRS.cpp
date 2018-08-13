@@ -500,4 +500,5 @@ int findplayer(Player Players[],string identity,int numPlayers){
             return i;
         }
     }
+    return -1;
 }
