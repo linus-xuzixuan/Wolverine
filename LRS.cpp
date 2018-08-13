@@ -320,7 +320,6 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         killed1=killed2;
         killed2=0;
     }
-
     if(killed1==0){
         cout<<"No one killed last night."<<endl;
     }else if(killed2==0){
@@ -360,7 +359,9 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     if(hunter==-1){
         goto nohunter;
     }
+    //Open fire if hunter dies
     if(Players[hunter].get_state()==0 && !hunterfired){
+        hunterfired=true;
         int target;
         cout<<"Hunter, open fire!"<<endl;
         hunterfire:
@@ -418,6 +419,29 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
             goto decide4;
         Players[playerChosen-1].set_life(0);
         cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
+    }
+    if(Players[playerChosen].get_identity()=="Hunter" && !hunterfired){
+        hunterfired=true;
+        int target;
+        cout<<"Hunter, open fire!"<<endl;
+        hunterfire2:
+        cout<<"Target (0 for abandon):";
+        cin>>target;
+        if(Players[target-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
+            goto hunterfire2;
+        }
+        if(target<0 || target>numPlayers){
+            cout<<"Not a valid player!"<<endl;
+            goto hunterfire2;
+        }
+        if(target==0){
+            cout<<"Abandoned."<<endl;
+        }else{
+            cout<<"Player "<<target<<" killed.";
+            Players[target-1].set_life(0);
+            loghunter(Players,target);
+        }
     }
 
     logday(Players,playerChosen);
