@@ -38,6 +38,7 @@ void startDay(Player Players[],int result1,int result2,int hunter);
 int main(void){
     int numPlayers;
     
+    openfile();
     cout<<"Please enter the number of players:";
     cin>>numPlayers;
 
@@ -180,12 +181,12 @@ void startNight(Player Players[]){
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
 
-    if(Players[playerchosen-1].get_state()==0){
-        cout<<"Already dead!"<<endl;
-        goto decide;
-    }
     if(playerchosen<1 || playerchosen>numPlayers){
         cout<<"Not a valid player!"<<endl;
+        goto decide;
+    }
+    if(Players[playerchosen-1].get_state()==0){
+        cout<<"Already dead!"<<endl;
         goto decide;
     }
 
