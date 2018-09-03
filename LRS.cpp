@@ -43,6 +43,7 @@ int findplayer(Player Players[],string identity,int numPlayers);
 int main(void){
     int numPlayers;
     
+    //Read Distrib.lrs file for player information
     openfile();
     cout<<"Please enter the number of players:";
     cin>>numPlayers;
@@ -68,6 +69,7 @@ int main(void){
         return 3;
     }
 
+    //Read the required line for number of each identity
     system("clear");
     fin>>numWolverines;
     cout<<"Wolverine count:"<<numWolverines<<endl;
@@ -137,6 +139,7 @@ int main(void){
     cout<<"End of identity confirmation."<<endl;
     system("sleep 3");
 
+    //Iteration goes on until game over
     while(!over){
         day+=1;
         startNight(Players,numPlayers);
