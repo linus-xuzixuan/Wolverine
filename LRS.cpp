@@ -518,6 +518,7 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             logover(3);
         }
         over=true;
+        cout<<"Please check LRS.log for complete record of this game."<<endl;
         return true;
     }else{
         return false;
