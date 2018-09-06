@@ -8,6 +8,7 @@ using namespace std;
 
 class Player{
 	public:
+	Player();
 	void set_life(int new_state);
 	string set_id(int id);
 	int get_state() const;
@@ -22,6 +23,10 @@ class Player{
 	string identity;
 	bool guarded;
 };
+
+Player::Player():state(1),guarded(false),identity(""),unguard(false){
+	//Intentionally empty
+}
 
 void Player::set_life(int new_state){
 	state=new_state;
@@ -69,7 +74,7 @@ void Player::guard(){
 void clear_guard(Player Players[],int num){
 	for(int i=0;i<num;i++){
 		Players[i].unguard=false;
-		if(Players[i].guarded){
+		if(Players[i].guarded==true){
 			Players[i].guarded=false;
 			Players[i].unguard=true;
 		}
