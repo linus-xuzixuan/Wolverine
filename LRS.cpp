@@ -379,7 +379,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     if(Players[-killed1-1].get_state()==0){
         killed1*=-1;        
     }
-    if(killed1<0){
+    if(killed1<0 || killed1==killed2){
         killed1=killed2;
         killed2=0;
     }
