@@ -280,7 +280,6 @@ void startNight(Player Players[],int numPlayers){
                 cout<<"Ok, rescued."<<endl;
                 if(Players[playerchosen-1].get_shield()==true){
                     Players[playerchosen-1].set_life(0);
-                    killed1=-playerchosen;
                 }
             }
         }else if(choice=='N' || choice=='n'){
