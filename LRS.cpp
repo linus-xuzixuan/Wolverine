@@ -336,7 +336,6 @@ void startNight(Player Players[],int numPlayers){
         cout<<"Still no choice."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
-    cin.ignore(10000,'\n');
     system("sleep 3");
     system("clear");
 
@@ -364,7 +363,6 @@ void startNight(Player Players[],int numPlayers){
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
-    cin.ignore(10000,'\n');
       
     lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
