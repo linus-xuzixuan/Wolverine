@@ -48,7 +48,6 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
     if(killed1<0){
         if(Players[-killed1-1].get_state()==0){
             fout<<", and the Witch blew him (her?) up. Tragically."<<endl;
-            killed1*=-1;
         }else{
             fout<<", but was rescued by the Witch."<<endl;
         }
