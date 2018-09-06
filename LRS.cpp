@@ -137,6 +137,7 @@ int main(void){
         system("clear");
     }
     cout<<"End of identity confirmation."<<endl;
+    cin.ignore(10000,'\n');
     system("sleep 3");
 
     //Iteration goes on until game over
@@ -198,6 +199,7 @@ void startNight(Player Players[],int numPlayers){
             decide0:
             cout<<"Who do you want to protect tonight (0 for abandon)?";
             cin>>playerchosen;
+            cout<<playerchosen; //For debugging purposes
             if(playerchosen==0){
                 cout<<"Abandoned."<<endl;
             }else{
@@ -215,6 +217,7 @@ void startNight(Player Players[],int numPlayers){
                 }
                 cout<<"Player "<<playerchosen<<", is that right?";
                 cin>>choice;
+                cout<<choice; //For debugging purposes
                 if(choice!='Y' && choice!='y')
                     goto decide0;
                 Players[playerchosen-1].guard();
@@ -237,6 +240,7 @@ void startNight(Player Players[],int numPlayers){
     decide:
     cout<<"Who do you want to kill?"<<endl;
     cin>>playerchosen;
+    cout<<playerchosen; //For debugging purposes
 
     if(playerchosen<1 || playerchosen>numPlayers){
         cout<<"Not a valid player!"<<endl;
@@ -249,6 +253,7 @@ void startNight(Player Players[],int numPlayers){
 
     cout<<"Player "<<playerchosen<<", is that right?";
     cin>>choice;
+    cout<<choice; //For debugging purposes
     if(choice!='Y' && choice!='y')
         goto decide;
 
@@ -268,6 +273,7 @@ void startNight(Player Players[],int numPlayers){
         decide2:
         cout<<"Player "<<playerchosen<<" dead, rescue?";
         cin>>choice;
+        cout<<choice; //For debugging purposes
         if(choice=='Y' || choice=='y'){
             if(saveused){
                 cout<<"Not valid. You have used your rescue."<<endl;
@@ -290,6 +296,7 @@ void startNight(Player Players[],int numPlayers){
         decide3:
         cout<<"Do you want to use poison?";
         cin>>choice;
+        cout<<choice; //For debugging purposes
         if(choice=='Y' || choice=='y'){
             if(rescue){
                 cout<<"Not valid. You have rescued someone in this turn."<<endl;
@@ -300,6 +307,7 @@ void startNight(Player Players[],int numPlayers){
                 decide31:
                 cout<<"Who?";
                 cin>>playerchosen;
+                cout<<playerchosen; //For debugging purposes
                 if(playerchosen<1 || playerchosen>numPlayers){
                     cout<<"Not a valid player!"<<endl;
                     goto decide31;
@@ -310,6 +318,7 @@ void startNight(Player Players[],int numPlayers){
                 }
                 cout<<"Player "<<playerchosen<<", is that right?";
                 cin>>choice;
+                cout<<choice; //For debugging purposes
                 if(choice!='Y' && choice!='y'){
                     goto decide31;
                 }
@@ -344,6 +353,7 @@ void startNight(Player Players[],int numPlayers){
         decide4:
         cout<<"Who do you want to verify?";
         cin>>verify;
+        cout<<verify; //For debugging purposes
         if(verify<1 || verify>numPlayers){
             cout<<"Not a valid player!"<<endl;
             goto decide4;
@@ -409,6 +419,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         hunterfire:
         cout<<"Target (0 for abandon):";
         cin>>target;
+        cout<<target; //For debugging purposes
         if(target<0 || target>numPlayers){
             cout<<"Not a valid player!"<<endl;
             goto hunterfire;
@@ -442,6 +453,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     decide4:
     cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
     cin>>playerChosen;
+    cout<<playerChosen; //For debugging purposes
     if(playerChosen<0 || playerChosen>numPlayers){
         cout<<"Not a valid player!"<<endl;
         goto decide4;
@@ -453,12 +465,14 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     if(playerChosen==0){
         cout<<"Peace, are you sure?";
         cin>>choice;
+        cout<<choice; //For debugging purposes
         if(choice!='Y' && choice!='y')
             goto decide4;
         cout<<"Ok, peace today."<<endl;
     }else{
         cout<<"Player "<<playerChosen<<", is that right?";
         cin>>choice;
+        cout<<choice; //For debugging purposes
         if(choice!='Y' && choice!='y')
             goto decide4;
         Players[playerChosen-1].set_life(0);
@@ -472,6 +486,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         hunterfire2:
         cout<<"Target (0 for abandon):";
         cin>>target;
+        cout<<target; //For debugging purposes
         if(target<0 || target>numPlayers){
             cout<<"Not a valid player!"<<endl;
             goto hunterfire2;
