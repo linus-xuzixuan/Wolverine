@@ -31,6 +31,7 @@ int numWolverines;
 int numVillagers;
 int numPowers;
 bool guardpresent=0;
+int lastguard=0;
 int killed1=0,killed2=0;
 int day=0;
 
@@ -207,6 +208,10 @@ void startNight(Player Players[],int numPlayers){
                 }
                 if(Players[playerchosen-1].get_state()==0){
                     cout<<"Already dead!"<<endl;
+                    goto decide0;
+                }
+                if(Players[playerchosen-1].unguard==true){
+                    cout<<"You have protected this player yesterday night."<<endl;
                     goto decide0;
                 }
                 cout<<"Player "<<playerchosen<<", is that right?";

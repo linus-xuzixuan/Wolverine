@@ -16,6 +16,7 @@ class Player{
 	void clear_guard();
 	bool get_shield() const;
 	friend void clear_guard(Player Players[],int num);
+	bool unguard;
 	private:
 	int state;
 	string identity;
@@ -67,7 +68,11 @@ void Player::guard(){
 
 void clear_guard(Player Players[],int num){
 	for(int i=0;i<num;i++){
-		Players[i].guarded=false;
+		Players[i].unguard=false;
+		if(Players[i].guarded){
+			Players[i].guarded=false;
+			Players[i].unguard=true;
+		}
 	}
 }
 
