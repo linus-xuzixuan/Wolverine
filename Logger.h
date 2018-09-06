@@ -46,8 +46,9 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
     //Logging Wolverine's kill
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
-        if(Players[-killed1].get_state()==0){
+        if(Players[-killed1-1].get_state()==0){
             fout<<", and the Witch blew him (her?) up. Tragically."<<endl;
+            killed1*=-1;
         }else{
             fout<<", but was rescued by the Witch."<<endl;
         }
