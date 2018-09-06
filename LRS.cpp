@@ -31,7 +31,6 @@ int numWolverines;
 int numVillagers;
 int numPowers;
 bool guardpresent=0;
-int lastguard=0;
 int killed1=0,killed2=0;
 int day=0;
 
@@ -314,7 +313,7 @@ void startNight(Player Players[],int numPlayers){
                 if(choice!='Y' && choice!='y'){
                     goto decide31;
                 }
-                Players[playerchosen-1].set_life(2);
+                Players[playerchosen-1].set_life(0);
                 killed2=playerchosen;
 
                 cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
