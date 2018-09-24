@@ -240,23 +240,24 @@ void startNight(Player Players[],int numPlayers){
 
     //Wolverine's turn
     cout<<"Wolverines!"<<endl;
-    decide:
-    cout<<"Who do you want to kill?"<<endl;
-    cin>>playerchosen;
+    while(!proceed){
+        cout<<"Who do you want to kill?"<<endl;
+        cin>>playerchosen;
 
-    if(playerchosen<1 || playerchosen>numPlayers){
-        cout<<"Not a valid player!"<<endl;
-        goto decide;
-    }
-    if(Players[playerchosen-1].get_state()==0){
-        cout<<"Already dead!"<<endl;
-        goto decide;
-    }
+        if(playerchosen<1 || playerchosen>numPlayers){
+            cout<<"Not a valid player!"<<endl;
+            continue;
+        }
+        if(Players[playerchosen-1].get_state()==0){
+            cout<<"Already dead!"<<endl;
+            continue;
+        }
 
-    cout<<"Player "<<playerchosen<<", is that right?";
-    cin>>choice;
-    if(choice!='Y' && choice!='y')
-        goto decide;
+        cout<<"Player "<<playerchosen<<", is that right?";
+        cin>>choice;
+        if(choice!='Y' && choice!='y')
+            proceed=1;
+    }
 
     if(Players[playerchosen-1].get_shield()==0){
         Players[playerchosen-1].set_life(2);
