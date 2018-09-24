@@ -336,6 +336,7 @@ void startNight(Player Players[],int numPlayers){
             }
             proceed=1;
         }
+        proceed=0;
     }else{
         cout<<"Player "<<playerchosen<<" dead, rescue?"<<endl;
         system("sleep 2");
@@ -353,19 +354,20 @@ void startNight(Player Players[],int numPlayers){
     int verify;
     cout<<"Predictor!"<<endl;
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()!=0){
-        decide4:
-        cout<<"Who do you want to verify?";
-        cin>>verify;
-        if(verify<1 || verify>numPlayers){
-            cout<<"Not a valid player!"<<endl;
-            goto decide4;
+        while(!proceed){
+            cout<<"Who do you want to verify?";
+            cin>>verify;
+            if(verify<1 || verify>numPlayers){
+                cout<<"Not a valid player!"<<endl;
+                continue;
+            }
+            string id=Players[verify-1].get_identity();
+            if(id=="Wolverine"){
+                cout<<"Player "<<verify<<" is bad."<<endl;
+            }else{
+                cout<<"Player "<<verify<<" is good."<<endl;
+            }
         }
-        string id=Players[verify-1].get_identity();
-        if(id=="Wolverine"){
-            cout<<"Player "<<verify<<" is bad."<<endl;
-        }else{
-            cout<<"Player "<<verify<<" is good."<<endl;
-        }   
     }else{
         verify=-1;
         cout<<"Who do you want to verify?"<<endl;
