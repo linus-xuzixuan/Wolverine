@@ -137,7 +137,6 @@ int main(void){
         system("clear");
     }
     cout<<"End of identity confirmation."<<endl;
-    cin.ignore(10000,'\n');
     system("sleep 3");
 
     //Iteration goes on until game over
@@ -231,7 +230,6 @@ void startNight(Player Players[],int numPlayers){
             cout<<"You don't seem to have a choice, as you are dead."<<endl;
         }
         cout<<"Close your eyes..."<<endl;
-        cin.ignore(10000,'\n');
         system("sleep 3");
         system("clear");
     }
