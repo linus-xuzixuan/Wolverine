@@ -20,6 +20,7 @@ using namespace std;
 
 ifstream fin;
 string spam; //For all kinds of pauses
+bool proceed=0;
 bool over=0;
 bool hunterfired=0;
 bool saveused=0;
@@ -196,32 +197,35 @@ void startNight(Player Players[],int numPlayers){
     if(guardpresent){
         if(Players[findplayer(Players,"Guard",numPlayers)].get_state()!=0){
             cout<<"Guard!"<<endl;
-            decide0:
-            cout<<"Who do you want to protect tonight (0 for abandon)?";
-            cin>>playerchosen;
-            if(playerchosen==0){
-                cout<<"Abandoned."<<endl;
-            }else{
-                if(playerchosen<0 || playerchosen>numPlayers){
-                    cout<<"Not a valid player!"<<endl;
-                    goto decide0;
+            while(!proceed){
+                cout<<"Who do you want to protect tonight (0 for abandon)?";
+                cin>>playerchosen;
+                if(playerchosen==0){
+                    cout<<"Abandoned."<<endl;
+                }else{
+                    if(playerchosen<0 || playerchosen>numPlayers){
+                        cout<<"Not a valid player!"<<endl;
+                        continue;
+                    }
+                    if(Players[playerchosen-1].get_state()==0){
+                        cout<<"Already dead!"<<endl;
+                        continue;
+                    }
+                    if(Players[playerchosen-1].unguard==true){
+                        cout<<"You have protected this player yesterday night."<<endl;
+                        continue;
+                    }
+                    cout<<"Player "<<playerchosen<<", is that right?";
+                    cin>>choice;
+                    if(choice!='Y' && choice!='y')
+                        continue;
+                    Players[playerchosen-1].guard();
+                    guard=playerchosen;
+                    cout<<"Ok, he (she?) is likely to be safe tonight."<<endl;
+                    proceed=1;
                 }
-                if(Players[playerchosen-1].get_state()==0){
-                    cout<<"Already dead!"<<endl;
-                    goto decide0;
-                }
-                if(Players[playerchosen-1].unguard==true){
-                    cout<<"You have protected this player yesterday night."<<endl;
-                    goto decide0;
-                }
-                cout<<"Player "<<playerchosen<<", is that right?";
-                cin>>choice;
-                if(choice!='Y' && choice!='y')
-                    goto decide0;
-                Players[playerchosen-1].guard();
-                guard=playerchosen;
-                cout<<"Ok, he (she?) is likely to be safe tonight."<<endl;
             }
+            proceed=0;
         }else{
             cout<<"Guard!"<<endl;
             cout<<"Who do you want to protect tonight (0 for abandon)?"<<endl;
