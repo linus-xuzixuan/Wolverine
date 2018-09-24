@@ -255,9 +255,10 @@ void startNight(Player Players[],int numPlayers){
 
         cout<<"Player "<<playerchosen<<", is that right?";
         cin>>choice;
-        if(choice!='Y' && choice!='y')
+        if(choice!='Y' || choice!='y')
             proceed=1;
     }
+    proceed=0;
 
     if(Players[playerchosen-1].get_shield()==0){
         Players[playerchosen-1].set_life(2);
@@ -265,7 +266,6 @@ void startNight(Player Players[],int numPlayers){
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
-    cin.ignore(10000,'\n');
     system("sleep 3");
     system("clear");
 
@@ -273,63 +273,68 @@ void startNight(Player Players[],int numPlayers){
     bool rescue=0;
     cout<<"Witch!"<<endl;
     if(Players[findplayer(Players,"Witch",numPlayers)].get_state()!=0){
-        decide2:
-        cout<<"Player "<<playerchosen<<" dead, rescue?";
-        cin>>choice;
-        if(choice=='Y' || choice=='y'){
-            if(saveused){
-                cout<<"Not valid. You have used your rescue."<<endl;
-            }else{
-                Players[playerchosen-1].set_life(1);
-                rescue=true;killed1*=-1;saveused=1;
-                cout<<"Ok, rescued."<<endl;
-                if(Players[playerchosen-1].get_shield()==true){
-                    Players[playerchosen-1].set_life(0);
+        while(!proceed){
+            cout<<"Player "<<playerchosen<<" dead, rescue?";
+            cin>>choice;
+            if(choice=='Y' || choice=='y'){
+                if(saveused){
+                    cout<<"Not valid. You have used your rescue."<<endl;
+                }else{
+                    Players[playerchosen-1].set_life(1);
+                    rescue=true;killed1*=-1;saveused=1;
+                    cout<<"Ok, rescued."<<endl;
+                    if(Players[playerchosen-1].get_shield()==true){
+                        Players[playerchosen-1].set_life(0);
+                    }
                 }
-            }
-        }else if(choice=='N' || choice=='n'){
+            }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, he (she?) is probably dead."<<endl;
-        }else{
-            cout<<"Not a valid decision!"<<endl;
-            goto decide2;
-        }
-        system("sleep 2");
-        decide3:
-        cout<<"Do you want to use poison?";
-        cin>>choice;
-        if(choice=='Y' || choice=='y'){
-            if(rescue){
-                cout<<"Not valid. You have rescued someone in this turn."<<endl;
-            }else if(poisonused){
-                cout<<"Not valid. You have used your poison."<<endl;
             }else{
-                poisonused=true;
-                decide31:
-                cout<<"Who?";
-                cin>>playerchosen;
-                if(playerchosen<1 || playerchosen>numPlayers){
-                    cout<<"Not a valid player!"<<endl;
-                    goto decide31;
-                }
-                if(Players[playerchosen-1].get_state()==0){
-                    cout<<"Already dead!"<<endl;
-                    goto decide31;
-                }
-                cout<<"Player "<<playerchosen<<", is that right?";
-                cin>>choice;
-                if(choice!='Y' && choice!='y'){
-                    goto decide31;
-                }
-                Players[playerchosen-1].set_life(0);
-                killed2=playerchosen;
-
-                cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
+                cout<<"Not a valid decision!"<<endl;
+                continue;
             }
-        }else if(choice=='N' || choice=='n'){
-            cout<<"Ok, nobody poisoned."<<endl;
-        }else{
-            cout<<"Not a valid decision!"<<endl;
-            goto decide3;
+            proceed=1;
+        }
+        proceed=0;
+        system("sleep 2");
+        while(!proceed){
+            cout<<"Do you want to use poison?";
+            cin>>choice;
+            if(choice=='Y' || choice=='y'){
+                if(rescue){
+                    cout<<"Not valid. You have rescued someone in this turn."<<endl;
+                }else if(poisonused){
+                    cout<<"Not valid. You have used your poison."<<endl;
+                }else{
+                    poisonused=true;
+                    while(!proceed){
+                        cout<<"Who?";
+                        cin>>playerchosen;
+                        if(playerchosen<1 || playerchosen>numPlayers){
+                            cout<<"Not a valid player!"<<endl;
+                            continue;
+                        }
+                        if(Players[playerchosen-1].get_state()==0){
+                            cout<<"Already dead!"<<endl;
+                            continue;
+                        }
+                        cout<<"Player "<<playerchosen<<", is that right?";
+                        cin>>choice;
+                        if(choice!='Y' && choice!='y'){
+                        continue;
+                        }
+                        Players[playerchosen-1].set_life(0);
+                        killed2=playerchosen;
+                        cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
+                    }
+                }
+            }else if(choice=='N' || choice=='n'){
+                cout<<"Ok, nobody poisoned."<<endl;
+            }else{
+                cout<<"Not a valid decision!"<<endl;
+                continue;
+            }
+            proceed=1;
         }
     }else{
         cout<<"Player "<<playerchosen<<" dead, rescue?"<<endl;
