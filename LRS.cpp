@@ -367,7 +367,7 @@ void startNight(Player Players[],int numPlayers){
     system("clear");
     for(int i=0;i<numPlayers;i++)
         if(Players[i].get_state()==2)
-            layers[i].set_life(0);
+            Players[i].set_life(0);
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
