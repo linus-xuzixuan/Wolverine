@@ -252,7 +252,8 @@ void startNight(Player Players[],int numPlayers){
         if(choice!='Y' || choice!='y')break;
     }
 
-    if(Players[playerchosen-1].get_shield()==0)Players[playerchosen-1].set_life(2);
+    if(Players[playerchosen-1].get_shield()==0)
+        Players[playerchosen-1].set_life(2);
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
@@ -365,7 +366,8 @@ void startNight(Player Players[],int numPlayers){
     system("sleep 3");
     system("clear");
     for(int i=0;i<numPlayers;i++)
-        if(Players[i].get_state()==2)Players[i].set_life(0);
+        if(Players[i].get_state()==2)
+            layers[i].set_life(0);
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
@@ -429,8 +431,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     //Check who should speak first
     int j=0;
     for(j=0;j<numPlayers;j++){
-        if(Players[j].get_state()==1)
-            break;
+        if(Players[j].get_state()==1)break;
     }
     cout<<"Please speak, starting from Player "<<j+1<<endl;
 
@@ -450,14 +451,12 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         if(playerChosen==0){
             cout<<"Peace, are you sure?";
             cin>>choice;
-            if(choice!='Y' && choice!='y')
-                continue;
+            if(choice!='Y' && choice!='y')continue;
             cout<<"Ok, peace today."<<endl;
         }else{
             cout<<"Player "<<playerChosen<<", is that right?";
             cin>>choice;
-            if(choice!='Y' && choice!='y')
-                continue;
+            if(choice!='Y' && choice!='y')continue;
             Players[playerChosen-1].set_life(0);
             cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
         }
@@ -491,8 +490,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     }
      
     logday(Players,playerChosen,day);
-    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
-        return;
+    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
     killed1=0;killed2=0;
 }
 
@@ -527,9 +525,7 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
 }
 
 int findplayer(Player Players[],string identity,int numPlayers){
-    for(int i=0;i<numPlayers;i++){
-        if(Players[i].get_identity()==identity)
-            return i;
-    }
+    for(int i=0;i<numPlayers;i++)
+        if(Players[i].get_identity()==identity)return i;
     return -1;
 }
