@@ -277,13 +277,14 @@ void startNight(Player Players[],int numPlayers){
                     if(Players[playerchosen-1].get_shield()==true)
                         Players[playerchosen-1].set_life(0);
                 }
+                break;
             }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, he (she?) is probably dead."<<endl;
+                break;
             }else{
                 cout<<"Not a valid decision!"<<endl;
                 continue;
             }
-            break;
         }
         system("sleep 2");
         while(true){
@@ -439,7 +440,8 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     //End of the day
     int playerChosen;
     while(true){
-        cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
+        cout<<"When finished speaking and voting, input the number of the Player out \ 
+         (0 for peace):";
         cin>>playerChosen;
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
