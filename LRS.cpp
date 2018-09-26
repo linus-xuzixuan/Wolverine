@@ -95,6 +95,9 @@ int main(void){
         case 12:
         PowerCount=4;
         break;
+        default:
+        cout << "Error: Distribution file corrupt." << endl;
+        exit(3);
     }
     char Power[PowerCount];
     for(int i=0;i<PowerCount;i++){
