@@ -1,6 +1,6 @@
 /* LRS.cpp
 By Linus Xu (linus-xuzixuan on GitHub)
-Note: "power" here means “神” in the Chinese game.
+Note: "Power" here means “神” in the Chinese game.
 This version currently works on Unix-based systems only as "clear" is a Shell command.
 */
 #define W 0 //Witch
@@ -312,9 +312,9 @@ void startNight(Player Players[],int numPlayers){
                         cin>>choice;
                         if(choice!='Y' || choice!='y')break;
                     }
-                        Players[playerchosen-1].set_life(0);
-                        killed2=playerchosen;
-                        cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
+                    Players[playerchosen-1].set_life(0);
+                    killed2=playerchosen;
+                    cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
                 }
             }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, nobody poisoned."<<endl;
@@ -440,8 +440,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     //End of the day
     int playerChosen;
     while(true){
-        cout<<"When finished speaking and voting, input the number of the Player out \ 
-         (0 for peace):";
+        cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
         cin>>playerChosen;
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
