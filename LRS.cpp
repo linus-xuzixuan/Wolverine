@@ -274,7 +274,8 @@ void startNight(Player Players[],int numPlayers){
                     Players[playerchosen-1].set_life(1);
                     rescue=true;killed1*=-1;saveused=1;
                     cout<<"Ok, rescued."<<endl;
-                    if(Players[playerchosen-1].get_shield()==true)Players[playerchosen-1].set_life(0);
+                    if(Players[playerchosen-1].get_shield()==true)
+                        Players[playerchosen-1].set_life(0);
                 }
             }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, he (she?) is probably dead."<<endl;
@@ -309,10 +310,10 @@ void startNight(Player Players[],int numPlayers){
                         cout<<"Player "<<playerchosen<<", is that right?";
                         cin>>choice;
                         if(choice!='Y' || choice!='y')break;
+                    }
                         Players[playerchosen-1].set_life(0);
                         killed2=playerchosen;
                         cout<<"Ok, Player "<<playerchosen<<" poisoned."<<endl;
-                    }
                 }
             }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, nobody poisoned."<<endl;
