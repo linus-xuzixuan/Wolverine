@@ -3,6 +3,7 @@ By Linus Xu (linus-xuzixuan on GitHub)
 Note: "Power" here means “神” in the Chinese game.
 This version currently works on Unix-based systems only as "clear" is a Shell command.
 */
+
 #define W 0 //Witch
 #define P 1 //Predictor
 #define H 2 //Hunter
@@ -118,7 +119,7 @@ int main(void){
                 Present[H]=true;
                 cout<<"1 hunter"<<endl;
             }else{
-                cout<<"Error: unrecognized identity in distribution file (not W, G, P or H)"<<endl;
+                cout<<"Error: unrecognized identity in distrib file (not W, G, P or H)"<<endl;
                 return 4;
             }
         }
@@ -147,6 +148,7 @@ int main(void){
         day+=1;
         startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter,numPlayers);
+        over=checkover(Players,numWolverines,numVillagers,numPowers);
     }
     
     endfile();
@@ -257,6 +259,7 @@ void startNight(Player Players[],int numPlayers){
 
     if(Players[playerchosen-1].get_shield()==0)
         Players[playerchosen-1].set_life(2);
+    
     killed1=playerchosen;
     cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
     cout<<"Close your eyes..."<<endl;
