@@ -46,7 +46,7 @@ int main(void){
     //Read Distrib.lrs file for player information
     openfile();
     cout<<"Please enter the number of players:";
-    cin>>numPlayers;
+    scanf("%d",&numPlayers);
 
     if (numPlayers<6 || numPlayers>12){
         cout<<"Not a valid player number."<<endl;
@@ -61,7 +61,7 @@ int main(void){
     }
 
     for(int i=1;i<numPlayers;i++)
-        fin.ignore(10000,'\n');
+        fin.ignore(100,'\n');
     int comp;
     fin>>comp;
     if(comp!=numPlayers){
@@ -130,13 +130,13 @@ int main(void){
     system("clear");
 
     cout<<"Type anything to start identity confirmation:";
-    cin>>spam;
+    scanf("%s",&spam);
     for(int j=0;j<numPlayers;j++){
         cout<<"Player "<<(j+1)<<", type something:";
-        cin>>spam;
+        scanf("%s",&spam);
         cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity()<<endl;
         cout<<"Type anything for confirmation:";
-        cin>>spam;
+        scanf("%s",&spam);
         system("clear");
     }
     cout<<"End of identity confirmation."<<endl;
@@ -200,7 +200,7 @@ void startNight(Player Players[],int numPlayers){
             cout<<"Guard!"<<endl;
             while(true){
                 cout<<"Who do you want to protect tonight (0 for abandon)?";
-                cin>>playerchosen;
+                scanf("%d",&playerchosen);
                 if(playerchosen==0){
                     cout<<"Abandoned."<<endl;
                 }else{
@@ -217,7 +217,7 @@ void startNight(Player Players[],int numPlayers){
                         continue;
                     }
                     cout<<"Player "<<playerchosen<<", is that right?";
-                    cin>>choice;
+                    scanf("%c",&choice);
                     if(choice!='Y' || choice!='y')break;
                 }
             }
@@ -239,7 +239,7 @@ void startNight(Player Players[],int numPlayers){
     cout<<"Wolverines!"<<endl;
     while(true){
         cout<<"Who do you want to kill?"<<endl;
-        cin>>playerchosen;
+        scanf("%d",&playerchosen);
 
         if(playerchosen<1 || playerchosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
@@ -251,7 +251,7 @@ void startNight(Player Players[],int numPlayers){
         }
 
         cout<<"Player "<<playerchosen<<", is that right?";
-        cin>>choice;
+        scanf("%s",&choice);
         if(choice!='Y' || choice!='y')break;
     }
 
@@ -269,7 +269,7 @@ void startNight(Player Players[],int numPlayers){
     if(Players[findplayer(Players,"Witch",numPlayers)].get_state()!=0){
         while(true){
             cout<<"Player "<<playerchosen<<" dead, rescue?";
-            cin>>choice;
+            scanf("%s", &choice);
             if(choice=='Y' || choice=='y'){
                 if(saveused){
                     cout<<"Not valid. You have used your rescue."<<endl;
@@ -292,7 +292,7 @@ void startNight(Player Players[],int numPlayers){
         system("sleep 2");
         while(true){
             cout<<"Do you want to use poison?";
-            cin>>choice;
+            scanf("%s", &choice);
             if(choice=='Y' || choice=='y'){
                 if(rescue){
                     cout<<"Not valid. You have rescued someone in this turn."<<endl;
@@ -302,7 +302,7 @@ void startNight(Player Players[],int numPlayers){
                     poisonused=true;
                     while(true){
                         cout<<"Who?";
-                        cin>>playerchosen;
+                        scanf("%d", &playerchosen);
                         if(playerchosen<1 || playerchosen>numPlayers){
                             cout<<"Not a valid player!"<<endl;
                             continue;
@@ -312,7 +312,7 @@ void startNight(Player Players[],int numPlayers){
                             continue;
                         }
                         cout<<"Player "<<playerchosen<<", is that right?";
-                        cin>>choice;
+                        scanf("%s", &choice);
                         if(choice!='Y' || choice!='y')break;
                     }
                     Players[playerchosen-1].set_life(0);
@@ -346,7 +346,7 @@ void startNight(Player Players[],int numPlayers){
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()!=0){
         while(true){
             cout<<"Who do you want to verify?";
-            cin>>verify;
+            scanf("%d",verify);
             if(verify<1 || verify>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
@@ -410,7 +410,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         cout<<"Hunter, open fire!"<<endl;
         while(true){
             cout<<"Target (0 for abandon):";
-            cin>>target;
+            scanf("%d",target);
             if(target<0 || target>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
@@ -444,7 +444,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     int playerChosen;
     while(true){
         cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
-        cin>>playerChosen;
+        scanf("%d",playerChosen);
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
             continue;
@@ -455,12 +455,12 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         }
         if(playerChosen==0){
             cout<<"Peace, are you sure?";
-            cin>>choice;
+            scanf("%s", &choice);
             if(choice!='Y' && choice!='y')continue;
             cout<<"Ok, peace today."<<endl;
         }else{
             cout<<"Player "<<playerChosen<<", is that right?";
-            cin>>choice;
+            scanf("%s", &choice);
             if(choice!='Y' && choice!='y')continue;
             Players[playerChosen-1].set_life(0);
             cout<<"Ok, Player "<<playerChosen<<" voted out."<<endl;
@@ -474,7 +474,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         cout<<"Hunter, open fire!"<<endl;
         while(true){
             cout<<"Target (0 for abandon):";
-            cin>>target;
+            scanf("%d", target);
             if(target<0 || target>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
