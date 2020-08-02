@@ -8,23 +8,25 @@ By Linus Xu (linus-xuzixuan on GitHub)
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <cctype>
 #include "Player.h"
 
 using namespace std;
 ofstream fout;
 
 void openfile(){
+    cout<<"Please input a valid filename (with path) for logging, or just press Enter for default (./LRS.log):";
     string logname;
-    cout<<"Please input a filename (with path) for logging, or just press Enter for default (./LRS.log):";
-    cin>>logname;
-    if (logname==""){
+    logname=cin.get();
+    if ((logname.c_str())[0]=='\n'){
         logname="./LRS.log";
     }
-    fout.open("./LRS.log",ios::app);
+    fout.open(logname,ios::app);
     if(fout.fail()){
         cout<<"Log opening failed.";
         exit(1);
     }
+    cout<<"OK, logging started at "<<logname<<"."<<endl;
     fout<<"---Program started---\n\n";
 }
 

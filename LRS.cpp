@@ -18,7 +18,6 @@ This version currently works on Unix-based systems only as "clear" is a Shell co
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
-#include <functional>
 #include "Player.h"
 #include "Logger.h"
 using namespace std;
@@ -128,6 +127,7 @@ int main(void){
     system("clear");
 
     cout<<"To 'god': Please check the log file for identities. After you finish, type something:";
+    cin>>spam;
     cout<<"End of identity confirmation."<<endl;
     system("sleep 2");
 
@@ -150,7 +150,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
         Player.push_back(i);
     }
     srand(time(0));
-    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out on g++ (Apple clang 11.0.0).
+    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out and functions properly on g++ (Apple clang 11.0.0).
     for (int i=0; i<Wolverines;i++){
         Players[Player[i]].set_id(1);
     }
