@@ -34,7 +34,6 @@ char choice;
 int numWolverines;
 int numVillagers;
 int numPowers;
-bool guardpresent=0;
 int killed1=0,killed2=0;
 int day=0;
 
@@ -113,7 +112,6 @@ int main(void){
                 cout<<"1 witch"<<endl;
             }else if(Power[i]=='G'){
                 Present[G]=true;
-                guardpresent=true;
                 cout<<"1 guard"<<endl;
             }else if(Power[i]=='P'){
                 Present[P]=true;
@@ -165,7 +163,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
         Player.push_back(i);
     }
     srand(time(0));
-    random_shuffle(Player.begin(), Player.end());
+    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out on g++ (Apple clang 11.0.0).
     for (int i=0; i<Wolverines;i++){
         Players[Player[i]].set_id(1);
     }
@@ -178,7 +176,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Pr
     if(numPlayers>=9){
         Players[Player[Wolverines + Villagers + 2]].set_id(5);
     }
-    if(guardpresent){
+    if(numPlayers==12){
         Players[Player[12]].set_id(6);
     }
     logid(Wolverines,Power,Villagers,Players);
@@ -193,7 +191,7 @@ void startNight(Player Players[],int numPlayers){
 
     //Guard's turn
     int guard=-1;
-    if(guardpresent){
+    if(numPlayers==12){
         if(Players[findplayer(Players,"Guard",numPlayers)].get_state()!=0){
             cout<<"Guard!"<<endl;
             while(true){
@@ -345,7 +343,7 @@ void startNight(Player Players[],int numPlayers){
     if(Players[findplayer(Players,"Predictor",numPlayers)].get_state()!=0){
         while(true){
             cout<<"Who do you want to verify?";
-            scanf("%d",verify);
+            scanf("%d",&verify);
             if(verify<1 || verify>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
@@ -409,7 +407,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         cout<<"Hunter, open fire!"<<endl;
         while(true){
             cout<<"Target (0 for abandon):";
-            scanf("%d",target);
+            scanf("%d",&target);
             if(target<0 || target>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
@@ -443,7 +441,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     int playerChosen;
     while(true){
         cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
-        scanf("%d",playerChosen);
+        scanf("%d",&playerChosen);
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
             continue;
@@ -473,7 +471,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
         cout<<"Hunter, open fire!"<<endl;
         while(true){
             cout<<"Target (0 for abandon):";
-            scanf("%d", target);
+            scanf("%d", &target);
             if(target<0 || target>numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
