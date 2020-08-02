@@ -1,6 +1,7 @@
 /* LRS.cpp
 By Linus Xu (linus-xuzixuan on GitHub)
-Note: "Power" here means “神” in the Chinese game.
+Note: "Power" here means “神” in the Chinese game, as the collection of Predictor (预言家), Witch (女巫), Hunter (猎人), and Guard (守卫).
+The function for a cop (警长) is currently not implemented (as of time of submission of this line), but will be developed later on.
 This version currently works on Unix-based systems only as "clear" is a Shell command.
 */
 
