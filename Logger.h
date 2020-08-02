@@ -14,6 +14,12 @@ using namespace std;
 ofstream fout;
 
 void openfile(){
+    string logname;
+    cout<<"Please input a filename (with path) for logging, or just press Enter for default (./LRS.log):";
+    cin>>logname;
+    if (logname==""){
+        logname="./LRS.log";
+    }
     fout.open("./LRS.log",ios::app);
     if(fout.fail()){
         cout<<"Log opening failed.";
@@ -47,7 +53,7 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
     fout<<"Wolverine(s) killed Player "<<abs(killed1);
     if(killed1<0){
         if(Players[-killed1-1].get_state()==0){
-            fout<<", and the Witch blew him (her?) up. Tragically."<<endl;
+            fout<<", and the Witch blew him (her?) up. How tragic."<<endl;
         }else{
             fout<<", but was rescued by the Witch."<<endl;
         }

@@ -126,18 +126,9 @@ int main(void){
     setIdentity(numWolverines,numVillagers,PowerCount,Players);
     system("clear");
 
-    cout<<"Type anything to start identity confirmation:";
-    scanf("%s",&spam);
-    for(int j=0;j<numPlayers;j++){
-        cout<<"Player "<<(j+1)<<", type something:";
-        scanf("%s",&spam);
-        cout<<"Player "<<(j+1)<<", you are "<<Players[j].get_identity()<<endl;
-        cout<<"Type anything for confirmation:";
-        scanf("%s",&spam);
-        system("clear");
-    }
+    cout<<"To 'god': Please check the log file for identities. After you finish, type something:";
     cout<<"End of identity confirmation."<<endl;
-    system("sleep 3");
+    system("sleep 2");
 
     //Iteration goes on until game over
     while(!over){
@@ -267,10 +258,11 @@ void startNight(Player Players[],int numPlayers){
                     cout<<"Not valid. You have used your rescue."<<endl;
                 }else{
                     Players[playerchosen-1].set_life(1);
-                    rescue=true;killed1*=-1;saveused=1;
+                    rescue=true;saveused=1;
+                    killed1 *= -1; //Implying witch's rescue.
                     cout<<"Ok, rescued."<<endl;
                     if(Players[playerchosen-1].get_shield()==true)
-                        Players[playerchosen-1].set_life(0);
+                        Players[playerchosen-1].set_life(0); //Blown up
                 }
                 break;
             }else if(choice=='N' || choice=='n'){
@@ -420,19 +412,18 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
             }
             break;
         }
-        if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
-            return;
+        if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
     }
 
     nohunter:
-    //Check who should speak first
+    //Check who should speak first (next to the dead person)
     int j=0;
     for(j=0;j<numPlayers;j++){
         if(Players[j].get_state()==1)break;
     }
-    cout<<"Please speak, starting from Player "<<j+1<<endl;
+    cout<<"Please speak, starting from Player "<<j+1<<", who will also decide whether to start from his/her left or right."<<endl;
 
-    //End of the day
+    //End of the day (no pun intended)
     int playerChosen;
     while(true){
         cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
