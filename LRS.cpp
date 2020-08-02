@@ -37,7 +37,7 @@ int numPowers;
 int killed1=0,killed2=0;
 int day=0;
 
-void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]);
+void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]);
 void startNight(Player Players[],int numPlayers);
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers);
 bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers);
@@ -80,7 +80,6 @@ int main(void){
     cout<<"Villager count:"<<numVillagers<<endl;
     numPowers=numPlayers-numWolverines-numVillagers;
 
-    bool Present[4];
     int PowerCount;
     switch(numPlayers){
         case 6:
@@ -108,16 +107,12 @@ int main(void){
             if(Power[i]==' '){
                 continue;
             }else if(Power[i]=='W'){
-                Present[W]=true;
                 cout<<"1 witch"<<endl;
             }else if(Power[i]=='G'){
-                Present[G]=true;
                 cout<<"1 guard"<<endl;
             }else if(Power[i]=='P'){
-                Present[P]=true;
                 cout<<"1 predictor"<<endl;
             }else if(Power[i]=='H'){
-                Present[H]=true;
                 cout<<"1 hunter"<<endl;
             }else{
                 cout<<"Error: unrecognized identity in distrib file (not W, G, P or H)"<<endl;
@@ -128,7 +123,7 @@ int main(void){
 
     fin.close();
     system("sleep 2");
-    setIdentity(numWolverines,numVillagers,PowerCount,Players,Present);
+    setIdentity(numWolverines,numVillagers,PowerCount,Players);
     system("clear");
 
     cout<<"Type anything to start identity confirmation:";
@@ -156,7 +151,7 @@ int main(void){
     return 0;
 }
 
-void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]){
+void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
     vector<int> Player;
     Player.reserve(12);
     for (int i = 0; i < Wolverines + Villagers + Power; i++){
