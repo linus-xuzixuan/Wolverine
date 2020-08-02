@@ -15,6 +15,9 @@ This version currently works on Unix-based systems only as "clear" is a Shell co
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
+#include <algorithm>
+#include <functional>
 #include "Player.h"
 #include "Logger.h"
 using namespace std;
@@ -156,34 +159,27 @@ int main(void){
 }
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[],bool Present[]){
-    int Left[Wolverines+Villagers+Power];
+    vector<int> Player;
+    Player.reserve(12);
+    for (int i = 0; i < Wolverines + Villagers + Power; i++){
+        Player.push_back(i);
+    }
     srand(time(0));
-    for(int j=0;j<Wolverines+Villagers+Power;j++){
-        Players[j].set_life(1);
-        defid:
-        int a=rand()%(Wolverines+Villagers+Power)+1;
-        if(Left[a-1]==1)goto defid;
-        if(a<=Wolverines){
-            Players[j].set_id(1);
-        }else if(a<=Villagers+Wolverines){
-            Players[j].set_id(2);
-        }else{
-            if(Present[W]){
-                Players[j].set_id(3);
-                Present[W]=false;
-            }else if(Present[P]){
-                Players[j].set_id(4);
-                Present[P]=false;
-            }else if(Present[H]){
-                Players[j].set_id(5);
-                hunter=j;
-                Present[H]=false;
-            }else{
-                Players[j].set_id(6);
-                Present[G]=false;
-            }
-        }
-        Left[a-1]=1;
+    random_shuffle(Player.begin(), Player.end());
+    for (int i=0; i<Wolverines;i++){
+        Players[Player[i]].set_id(1);
+    }
+    for (int i = Wolverines; i < Wolverines+Villagers; i++)
+    {
+        Players[Player[i]].set_id(2);
+    }
+    Players[Player[Wolverines + Villagers]].set_id(3);
+    Players[Player[Wolverines + Villagers + 1]].set_id(4);
+    if(numPlayers>=9){
+        Players[Player[Wolverines + Villagers + 2]].set_id(5);
+    }
+    if(guardpresent){
+        Players[Player[12]].set_id(6);
     }
     logid(Wolverines,Power,Villagers,Players);
 }
@@ -201,7 +197,7 @@ void startNight(Player Players[],int numPlayers){
         if(Players[findplayer(Players,"Guard",numPlayers)].get_state()!=0){
             cout<<"Guard!"<<endl;
             while(true){
-                cout<<"Who do you want to protect tonight (0 for abandon)?";
+                cout<<"Who do you want to protect tonight (0 to abandon)?";
                 scanf("%d",&playerchosen);
                 if(playerchosen==0){
                     cout<<"Abandoned."<<endl;
@@ -215,7 +211,7 @@ void startNight(Player Players[],int numPlayers){
                         continue;
                     }
                     if(Players[playerchosen-1].unguard==true){
-                        cout<<"You have protected this player yesterday night."<<endl;
+                        cout<<"You have protected this player last night."<<endl;
                         continue;
                     }
                     cout<<"Player "<<playerchosen<<", is that right?";
