@@ -36,18 +36,20 @@ int numVillagers;
 int numPowers;
 int killed1=0,killed2=0;
 int day=0;
+int playersleft[3];
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]);
 void startNight(Player Players[],int numPlayers);
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers);
 bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers);
 int findplayer(Player Players[],string identity,int numPlayers);
+void hunterfire(Player Players[]);
 
 int main(void){
     int numPlayers;
     
     //Read Distrib.lrs file for player information
-    openfile();
+    openlog();
     cout<<"Please enter the number of players:";
     scanf("%d",&numPlayers);
 
@@ -79,30 +81,10 @@ int main(void){
     fin>>numVillagers;
     cout<<"Villager count:"<<numVillagers<<endl;
     numPowers=numPlayers-numWolverines-numVillagers;
+    playersleft[0]=numWolverines; playersleft[1]=numVillagers; playersleft[2]=numPowers;
 
-    int PowerCount;
-    switch(numPlayers){
-        case 6:
-        case 7:
-        case 8:
-        PowerCount=2;
-        break;
-
-        case 9:
-        case 10:
-        case 11:
-        PowerCount=3;
-        break;
-
-        case 12:
-        PowerCount=4;
-        break;
-        default:
-        cout << "Error: Distribution file corrupt." << endl;
-        exit(3);
-    }
-    char Power[PowerCount];
-    for(int i=0;i<PowerCount;i++){
+    char Power[numPowers];
+    for(int i=0;i<numPowers;i++){
         for(fin>>Power[i];Power[0]!='\n';fin.get(Power[0])){
             if(Power[i]==' '){
                 continue;
@@ -123,11 +105,11 @@ int main(void){
 
     fin.close();
     system("sleep 2");
-    setIdentity(numWolverines,numVillagers,PowerCount,Players);
+    setIdentity(numWolverines,numVillagers,numPowers,Players);
     system("clear");
 
-    cout<<"To 'god': Please check the log file for identities. After you finish, type something:";
-    cin>>spam;
+    cout<<"To 'God': Please check the log file for identities. After you finish, type something:";
+    spam=cin.get();
     cout<<"End of identity confirmation."<<endl;
     system("sleep 2");
 
@@ -139,7 +121,7 @@ int main(void){
         over=checkover(Players,numWolverines,numVillagers,numPowers);
     }
     
-    endfile();
+    endlog();
     return 0;
 }
 
@@ -150,7 +132,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
         Player.push_back(i);
     }
     srand(time(0));
-    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out and functions properly on g++ (Apple clang 11.0.0).
+    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out and functions properly when compiled with g++ (Apple clang 11.0.0) on macOS 10.15.6 (19G73).
     for (int i=0; i<Wolverines;i++){
         Players[Player[i]].set_id(1);
     }
@@ -242,7 +224,7 @@ void startNight(Player Players[],int numPlayers){
         Players[playerchosen-1].set_life(2);
     
     killed1=playerchosen;
-    cout<<"Ok, Player "<<playerchosen<<" dead, at least for now..."<<endl;
+    cout<<"Ok, Player "<<playerchosen<<" dead, or at least it seems..."<<endl;
     cout<<"Close your eyes..."<<endl;
     system("sleep 3");
     system("clear");
@@ -362,7 +344,7 @@ void startNight(Player Players[],int numPlayers){
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
-    if(Players[-killed1-1].get_state()==0)killed1*=-1;
+    if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1;
     if(killed1<0 || killed1==killed2){
         killed1=killed2;
         killed2=0;
@@ -391,43 +373,19 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     //Open fire if hunter dies
     if(Players[hunter].get_state()==0 && !hunterfired){
         hunterfired=true;
-        int target;
-        cout<<"Hunter, open fire!"<<endl;
-        while(true){
-            cout<<"Target (0 for abandon):";
-            scanf("%d",&target);
-            if(target<0 || target>numPlayers){
-                cout<<"Not a valid player!"<<endl;
-                continue;
-            }
-            if(Players[target-1].get_state()==0){
-                cout<<"Already dead!"<<endl;
-                continue;
-            }
-            if(target==0){
-                cout<<"Abandoned."<<endl;
-            }else{
-                cout<<"Player "<<target<<" killed."<<endl;
-                Players[target-1].set_life(0);
-                loghunter(Players,target);
-            }
-            break;
-        }
+        hunterfire(Players);
         if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
     }
 
     nohunter:
-    //Check who should speak first (next to the dead person)
-    int j=0;
-    for(j=0;j<numPlayers;j++){
-        if(Players[j].get_state()==1)break;
-    }
-    cout<<"Please speak, starting from Player "<<j+1<<", who will also decide whether to start from his/her left or right."<<endl;
+    //Check who should speak first (next to the first dead person (killed1))
+    cout<<"Player "<<killed1<<" will decide whether speaking will start from his/her left or right."<<endl;
+    system("sleep 2");
 
     //End of the day (no pun intended)
     int playerChosen;
     while(true){
-        cout<<"When finished speaking and voting, input the number of the Player out (0 for peace):";
+        cout<<"When finished speaking and voting, input the number of the Player voted out (0 for peace):";
         scanf("%d",&playerChosen);
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
@@ -454,28 +412,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
 
     if(Players[playerChosen-1].get_identity()=="Hunter" && !hunterfired){
         hunterfired=true;
-        int target;
-        cout<<"Hunter, open fire!"<<endl;
-        while(true){
-            cout<<"Target (0 for abandon):";
-            scanf("%d", &target);
-            if(target<0 || target>numPlayers){
-                cout<<"Not a valid player!"<<endl;
-                continue;
-            }
-            if(Players[target-1].get_state()==0){
-                cout<<"Already dead!"<<endl;
-                continue;
-            }
-            if(target==0){
-                cout<<"Abandoned."<<endl;
-            }else{
-                cout<<"Player "<<target<<" killed."<<endl;
-                Players[target-1].set_life(0);
-                loghunter(Players,target);
-            }
-            break;
-        }
+        hunterfire(Players);
     }
      
     logday(Players,playerChosen,day);
@@ -508,7 +445,7 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             logover(3);
         }
         over=true;
-        cout<<"Please check LRS.log for complete record of this game."<<endl;
+        cout<<"Please check LRS.log for the complete record of this game."<<endl;
         return true;
     }else{return false;}
 }
@@ -517,4 +454,35 @@ int findplayer(Player Players[],string identity,int numPlayers){
     for(int i=0;i<numPlayers;i++)
         if(Players[i].get_identity()==identity)return i;
     return -1;
+}
+
+void hunterfire(Player Players[]){
+    int target;
+    cout << "Hunter, open fire!" << endl;
+    while (true)
+    {
+        cout << "Target (0 for abandon):";
+        scanf("%d", &target);
+        if (target < 0 || target > numPlayers)
+        {
+            cout << "Not a valid player!" << endl;
+            continue;
+        }
+        if (Players[target - 1].get_state() == 0)
+        {
+            cout << "Already dead!" << endl;
+            continue;
+        }
+        if (target == 0)
+        {
+            cout << "Abandoned." << endl;
+        }
+        else
+        {
+            cout << "Player " << target << " killed." << endl;
+            Players[target - 1].set_life(0);
+            loghunter(Players, target);
+        }
+        break;
+    }
 }

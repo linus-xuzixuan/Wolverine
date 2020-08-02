@@ -14,7 +14,7 @@ By Linus Xu (linus-xuzixuan on GitHub)
 using namespace std;
 ofstream fout;
 
-void openfile(){
+void openlog(){
     cout<<"Please input a valid filename (with path) for logging, or just press Enter for default (./LRS.log):";
     string logname;
     logname=cin.get();
@@ -112,7 +112,7 @@ void logover(int reason){
     fout<<"Game over."<<endl<<endl;
 }
 
-void endfile(){
+void endlog(){
     fout<<"---Program ended properly---"<<endl;
     fout.close();
 }
