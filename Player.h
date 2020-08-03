@@ -14,7 +14,6 @@ class Player{
 	int get_state() const;
 	string get_identity() const;
 	void guard();
-	void clear_guard();
 	bool get_shield() const;
 	friend void clear_guard(Player Players[],int num);
 	bool unguard;

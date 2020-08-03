@@ -41,7 +41,6 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
 }
 
 void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int day){
-    fout<<"Night "<<day<<endl;
     //Logging guard's guard
     if(guard>=0){
         if(guard==0){
@@ -52,15 +51,17 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
     }
     
     //Logging Wolverine's kill
-    fout<<"Wolverine(s) killed Player "<<abs(killed1);
-    if(killed1<0){
+    fout<<"Wolverine(s) tried to kill Player ";
+    if (killed1<0){
         if(Players[-killed1-1].get_state()==0){
-            fout<<", and the Witch blew him (her?) up. How tragic."<<endl;
+            fout<<-killed1<<", and the Witch blew him (her?) up. How tragic."<<endl;
         }else{
-            fout<<", but was rescued by the Witch."<<endl;
+            fout<<-killed1<<", but was rescued by the Witch." << endl;
         }
+    }else if (killed1>=1000){
+        fout<<(killed1-1000)<<", but the guard stopped it from happening."<<endl;
     }else{
-        fout<<"."<<endl;
+        fout<<killed1<<", and was successful."<<endl;
     }
 
     //Logging Witch's poison (if any)
@@ -84,7 +85,6 @@ void lognight(Player Players[],int killed1,int killed2,int guard,int verify,int 
 }
 
 void logday(Player Players[],int votekill,int day){
-    fout<<"Day "<<day<<endl;
     if(votekill!=0){
         fout<<"Player "<<votekill<<" was voted out."<<endl;
     }else{

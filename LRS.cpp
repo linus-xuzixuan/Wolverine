@@ -46,10 +46,6 @@ int findplayer(Player Players[],string identity,int numPlayers);
 void hunterfire(Player Players[]);
 
 int main(int argc, char* argv[]){
-    int numPlayers;
-    
-    //Read Distrib.lrs file for player information
-    openlog();
 
     //Get numPlayers from CLI parameters if possible, or request an input
     if(argc < 2 || atol(argv[1])==-1){
@@ -57,14 +53,19 @@ int main(int argc, char* argv[]){
         scanf("%d", &numPlayers);
     }else{
         numPlayers = atol(argv[1]);
+        cout<<"Starting the game with "<<numPlayers<<" players."<<endl;
     }
 
     if (numPlayers<6 || numPlayers>12){
         cout<<"Not a valid player number."<<endl;
         return 1;
     }
+
+    openlog();
+
     Player Players[numPlayers];
-    
+
+    //Read Distrib.lrs file for player information
     fin.open("./Distrib.lrs");
     if(fin.fail()){
         cout<<"Error: Distribution file not found."<<endl;
@@ -79,6 +80,8 @@ int main(int argc, char* argv[]){
         cout<<"Error: Distribution file corrupt."<<endl;
         return 3;
     }
+
+    system("sleep 3");
 
     //Read the required line for number of each identity
     system("clear");
@@ -114,10 +117,8 @@ int main(int argc, char* argv[]){
     setIdentity(numWolverines,numVillagers,numPowers,Players);
     system("clear");
 
-    cout<<"To 'God': Please check the log file for identities. After you finish, type something:";
-    cin.get();
-    cout<<"End of identity confirmation."<<endl;
-    system("sleep 2");
+    cout<<"To 'God': Please check the log file for identities."<<endl;
+    system("sleep 5");
 
     //Iteration goes on until game over
     while(!over){
@@ -147,6 +148,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
     Players[Player[Wolverines + Villagers]].set_id(3); //Witch
     Players[Player[Wolverines + Villagers + 1]].set_id(4); //Predictor
     if (Wolverines + Villagers + Power >= 9){
+        hunter = Player[Wolverines + Villagers + 2];
         Players[Player[Wolverines + Villagers + 2]].set_id(5); //Hunter
     }
     if (Wolverines + Villagers + Power == 12){
@@ -156,6 +158,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
 }
 
 void startNight(Player Players[],int numPlayers){
+    fout<<"Night "<<day<<endl;
     clear_guard(Players,numPlayers);
     int playerchosen;
     cout<<"Close your eyes please..."<<endl;
@@ -169,7 +172,8 @@ void startNight(Player Players[],int numPlayers){
             cout<<"Guard!"<<endl;
             while(true){
                 cout<<"Who do you want to protect tonight (0 to abandon)?";
-                scanf("%d",&playerchosen);
+                cin>>playerchosen;
+                cin.ignore(100,'\n');
                 if(playerchosen==0){
                     cout<<"Abandoned."<<endl;
                     break;
@@ -187,8 +191,8 @@ void startNight(Player Players[],int numPlayers){
                         continue;
                     }
                     cout<<"Player "<<playerchosen<<", is that right?";
-                    scanf("%c",&choice);
-                    if(choice!='Y' || choice!='y')continue;
+                    scanf("%s", &choice);
+                    if(choice != 'Y' && choice != 'y')continue;
                     Players[playerchosen - 1].guard();
                     guard = playerchosen;
                     cout << "Ok, he (she?) is likely to be safe tonight." << endl;
@@ -223,13 +227,15 @@ void startNight(Player Players[],int numPlayers){
 
         cout<<"Player "<<playerchosen<<", is that right?";
         scanf("%s",&choice);
-        if(choice!='Y' || choice!='y')break;
+        if(choice == 'Y' || choice == 'y')break;
     }
 
-    if(Players[playerchosen-1].get_shield()==0) //Not guarded
-        Players[playerchosen-1].set_life(2);
-    
-    killed1=playerchosen;
+    if(Players[playerchosen-1].get_shield()==0){ //Not guarded
+        Players[playerchosen-1].set_life(2);killed1=playerchosen;
+    }else{ //Guarded
+        killed1=1000+playerchosen;
+    }
+
     cout<<"Ok, Player "<<playerchosen<<" dead, or at least it seems..."<<endl;
     cout<<"Close your eyes..."<<endl;
     system("sleep 3");
@@ -325,8 +331,7 @@ void startNight(Player Players[],int numPlayers){
                 cout<<"Not a valid player!"<<endl;
                 continue;
             }
-            string id=Players[verify-1].get_identity();
-            if(id=="Wolverine"){
+            if (Players[verify - 1].get_identity() == "Wolverine"){
                 cout<<"Player "<<verify<<" is bad."<<endl;
             }else{
                 cout<<"Player "<<verify<<" is good."<<endl;
@@ -350,9 +355,12 @@ void startNight(Player Players[],int numPlayers){
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
+    fout<<"Day "<<day<<endl;
+
     //Result announcement
+    if(killed1>1000)killed1=0;
     if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1; //Short circuited evaluation prevents UB for the latter evaluation if killed1 >= 0.
-    if(killed1<0 || killed1==killed2){ //Move killed2 to killed1
+    if(killed1<=0 || killed1==killed2){ //Move killed2 to killed1, implying 
         killed1=killed2;
         killed2=0;
     }
@@ -385,7 +393,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     }
 
     nohunter:
-    //Check who should speak firstnext to the first dead person (killed1)
+    //Check who should speak first
     if(killed1!=0){
         //next to the first dead person (killed1), if there is one
         cout<< "Player " << killed1 << " will decide whether speaking will start from his/her left or right." << endl;
@@ -481,7 +489,7 @@ void hunterfire(Player Players[]){
     while (true)
     {
         cout << "Target (0 for abandon):";
-        scanf("%d", &target);
+        cin>>target;
         if (target < 0 || target > numPlayers)
         {
             cout << "Not a valid player!" << endl;
