@@ -30,6 +30,11 @@ Player::Player():state(1),guarded(false),identity(""),unguard(false){
 
 void Player::set_life(int new_state){
 	state=new_state;
+	/*
+	0: Dead (Poisoned, not rescued by Witch after being killed by Wolverine, or voted out)
+	1: Alive
+	2: Killed by Wolverine and awaiting decision by Witch whether to rescue
+	*/
 }
 
 string Player::set_id(int id){

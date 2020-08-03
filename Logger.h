@@ -13,10 +13,10 @@ By Linus Xu (linus-xuzixuan on GitHub)
 
 using namespace std;
 ofstream fout;
+string logname;
 
 void openlog(){
     cout<<"Please input a valid filename (with path) for logging, or just press Enter for default (./LRS.log):";
-    string logname;
     logname=cin.get();
     if ((logname.c_str())[0]=='\n'){
         logname="./LRS.log";
@@ -34,7 +34,7 @@ void logid(int numWolverines,int numPowers,int numVillagers,Player Players[]){
     fout<<"Total: "<<numWolverines+numPowers+numVillagers<<" players."<<endl;
     fout<<numWolverines<<" wolverines, "<<numPowers<<" powers, and "<<numVillagers<<" villagers."<<endl;
     fout<<endl<<"Identities:"<<endl;
-    for(int i=0;i<numWolverines+numPowers+numVillagers;i++){
+    for(int i = 0; i < numWolverines + numPowers + numVillagers; i++){
         fout<<"Player "<<i+1<<" is a "<<Players[i].get_identity()<<"."<<endl;
     }
     fout<<endl;
@@ -113,6 +113,7 @@ void logover(int reason){
 }
 
 void endlog(){
+    cout<<"The complete record of the game can be found at "<<logname<<endl;
     fout<<"---Program ended properly---"<<endl;
     fout.close();
 }

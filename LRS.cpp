@@ -45,13 +45,19 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
 int findplayer(Player Players[],string identity,int numPlayers);
 void hunterfire(Player Players[]);
 
-int main(void){
+int main(int argc, char* argv[]){
     int numPlayers;
     
     //Read Distrib.lrs file for player information
     openlog();
-    cout<<"Please enter the number of players:";
-    scanf("%d",&numPlayers);
+
+    //Get numPlayers from CLI parameters if possible, or request an input
+    if(argc < 2 || atol(argv[1])==-1){
+        cout << "Please enter the number of players:";
+        scanf("%d", &numPlayers);
+    }else{
+        numPlayers = atol(argv[1]);
+    }
 
     if (numPlayers<6 || numPlayers>12){
         cout<<"Not a valid player number."<<endl;
@@ -109,7 +115,7 @@ int main(void){
     system("clear");
 
     cout<<"To 'God': Please check the log file for identities. After you finish, type something:";
-    spam=cin.get();
+    cin.get();
     cout<<"End of identity confirmation."<<endl;
     system("sleep 2");
 
@@ -118,7 +124,6 @@ int main(void){
         day+=1;
         startNight(Players,numPlayers);
         startDay(Players,killed1,killed2,hunter,numPlayers);
-        over=checkover(Players,numWolverines,numVillagers,numPowers);
     }
     
     endlog();
@@ -127,26 +132,25 @@ int main(void){
 
 void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
     vector<int> Player;
-    Player.reserve(12);
     for (int i = 0; i < Wolverines + Villagers + Power; i++){
         Player.push_back(i);
     }
-    srand(time(0));
-    random_shuffle(Player.begin(), Player.end()); //This line reports an error on VS Code Insiders as of time of submission, but it checks out and functions properly when compiled with g++ (Apple clang 11.0.0) on macOS 10.15.6 (19G73).
-    for (int i=0; i<Wolverines;i++){
+    srand(uint(time(0)));
+    random_shuffle(Player.begin(), Player.end()); //This line reports an error ("random_shuffle" is undefined) on VS Code Insiders as of time of submission, but it checks out and functions properly when compiled with g++ (Apple clang 11.0.0) on macOS 10.15.6 (19G73).
+
+    for (int i = 0; i < Wolverines; i++){
         Players[Player[i]].set_id(1);
     }
-    for (int i = Wolverines; i < Wolverines+Villagers; i++)
-    {
-        Players[Player[i]].set_id(2);
+    for (int j = Wolverines; j < Wolverines+Villagers; j++){
+        Players[Player[j]].set_id(2);
     }
-    Players[Player[Wolverines + Villagers]].set_id(3);
-    Players[Player[Wolverines + Villagers + 1]].set_id(4);
-    if(numPlayers>=9){
-        Players[Player[Wolverines + Villagers + 2]].set_id(5);
+    Players[Player[Wolverines + Villagers]].set_id(3); //Witch
+    Players[Player[Wolverines + Villagers + 1]].set_id(4); //Predictor
+    if (Wolverines + Villagers + Power >= 9){
+        Players[Player[Wolverines + Villagers + 2]].set_id(5); //Hunter
     }
-    if(numPlayers==12){
-        Players[Player[12]].set_id(6);
+    if (Wolverines + Villagers + Power == 12){
+        Players[Player[11]].set_id(6); //Guard
     }
     logid(Wolverines,Power,Villagers,Players);
 }
@@ -168,6 +172,7 @@ void startNight(Player Players[],int numPlayers){
                 scanf("%d",&playerchosen);
                 if(playerchosen==0){
                     cout<<"Abandoned."<<endl;
+                    break;
                 }else{
                     if(playerchosen<0 || playerchosen>numPlayers){
                         cout<<"Not a valid player!"<<endl;
@@ -183,16 +188,17 @@ void startNight(Player Players[],int numPlayers){
                     }
                     cout<<"Player "<<playerchosen<<", is that right?";
                     scanf("%c",&choice);
-                    if(choice!='Y' || choice!='y')break;
+                    if(choice!='Y' || choice!='y')continue;
+                    Players[playerchosen - 1].guard();
+                    guard = playerchosen;
+                    cout << "Ok, he (she?) is likely to be safe tonight." << endl;
+                    break;
                 }
             }
-            Players[playerchosen-1].guard();
-            guard=playerchosen;
-            cout<<"Ok, he (she?) is likely to be safe tonight."<<endl;
         }else{
             cout<<"Guard!"<<endl;
             cout<<"Who do you want to protect tonight (0 for abandon)?"<<endl;
-            system("sleep 2");
+            system("sleep 1");
             cout<<"You don't seem to have a choice, as you are dead."<<endl;
         }
         cout<<"Close your eyes..."<<endl;
@@ -220,7 +226,7 @@ void startNight(Player Players[],int numPlayers){
         if(choice!='Y' || choice!='y')break;
     }
 
-    if(Players[playerchosen-1].get_shield()==0)
+    if(Players[playerchosen-1].get_shield()==0) //Not guarded
         Players[playerchosen-1].set_life(2);
     
     killed1=playerchosen;
@@ -245,7 +251,7 @@ void startNight(Player Players[],int numPlayers){
                     killed1 *= -1; //Implying witch's rescue.
                     cout<<"Ok, rescued."<<endl;
                     if(Players[playerchosen-1].get_shield()==true)
-                        Players[playerchosen-1].set_life(0); //Blown up
+                        Players[playerchosen - 1].set_life(0); //Being both guarded and rescued kills the player.
                 }
                 break;
             }else if(choice=='N' || choice=='n'){
@@ -288,6 +294,7 @@ void startNight(Player Players[],int numPlayers){
                 }
             }else if(choice=='N' || choice=='n'){
                 cout<<"Ok, nobody poisoned."<<endl;
+                break;
             }else{
                 cout<<"Not a valid decision!"<<endl;
                 continue;
@@ -295,12 +302,12 @@ void startNight(Player Players[],int numPlayers){
             break;
         }
     }else{
-        cout<<"Player "<<playerchosen<<" dead, rescue?"<<endl;
-        system("sleep 2");
+        cout<<"Player ?? dead, rescue?"<<endl;
+        system("sleep 1");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
         system("sleep 1");
         cout<<"Do you want to use poison?"<<endl;
-        system("sleep 2");
+        system("sleep 1");
         cout<<"Still no choice."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
@@ -329,7 +336,7 @@ void startNight(Player Players[],int numPlayers){
     }else{
         verify=-1;
         cout<<"Who do you want to verify?"<<endl;
-        system("sleep 2");
+        system("sleep 1");
         cout<<"You don't seem to have a choice, as you are dead."<<endl;
     }
     cout<<"Close your eyes..."<<endl;
@@ -337,55 +344,67 @@ void startNight(Player Players[],int numPlayers){
     lognight(Players,killed1,killed2,guard,verify,day);
     system("sleep 3");
     system("clear");
-    for(int i=0;i<numPlayers;i++)
+    for (int i = 0; i < numPlayers; i++)
         if(Players[i].get_state()==2)
             Players[i].set_life(0);
 }
 
 void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers){
     //Result announcement
-    if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1;
-    if(killed1<0 || killed1==killed2){
+    if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1; //Short circuited evaluation prevents UB for the latter evaluation if killed1 >= 0.
+    if(killed1<0 || killed1==killed2){ //Move killed2 to killed1
         killed1=killed2;
         killed2=0;
     }
     if(killed1==0){
-        cout<<"No one killed last night."<<endl;
+        cout<<"No one was killed last night."<<endl;
     }else{
         if(killed2==0){
-            cout<<"Player "<<killed1<<" dead!"<<endl;
+            cout<<"Player "<<killed1<<" is dead!"<<endl;
         }else{
-            if(killed1>killed2){
+            if(killed1>killed2){ //Switch values so that killed1<killed2, to prevent disclosure of cause of death (Wolverine or Witch) by the order.
                 int temp;
                 temp=killed2;killed2=killed1;killed1=temp;
             }
-            cout<<"Player "<<killed1<<" and "<<killed2<<" dead!"<<endl;
+            cout<<"Player "<<killed1<<" and "<<killed2<<" are dead!"<<endl;
         }
     }
 
     //Check if the game should end (all wolverines/villagers/powers dead)
-    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)
-        return;
+    if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
+    else{cout<<"The game continues."<<endl;}
     
-    if(hunter==-1){
-        goto nohunter;
-    }
+    if(hunter==-1)goto nohunter;
+
     //Open fire if hunter dies
     if(Players[hunter].get_state()==0 && !hunterfired){
         hunterfired=true;
         hunterfire(Players);
         if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
+        else{cout << "The game continues." << endl;}
     }
 
     nohunter:
-    //Check who should speak first (next to the first dead person (killed1))
-    cout<<"Player "<<killed1<<" will decide whether speaking will start from his/her left or right."<<endl;
+    //Check who should speak firstnext to the first dead person (killed1)
+    if(killed1!=0){
+        //next to the first dead person (killed1), if there is one
+        cout<< "Player " << killed1 << " will decide whether speaking will start from his/her left or right." << endl;
+    }else{
+        //Find the first remaining player otherwise
+        int speak=0;
+        for(int i = 0; i < numPlayers; i++){
+            if(Players[i].get_state()==1){
+                speak=i;break;
+            }
+        }
+        cout << "Player " << speak+1 << " will speak and then decide whether to continue from his/her left or right." << endl;
+    }
     system("sleep 2");
 
     //End of the day (no pun intended)
     int playerChosen;
     while(true){
-        cout<<"When finished speaking and voting, input the number of the Player voted out (0 for peace):";
+        cout<<"When finished speaking and voting, input the number of the player voted out (0 for peace):";
         scanf("%d",&playerChosen);
         if(playerChosen<0 || playerChosen>numPlayers){
             cout<<"Not a valid player!"<<endl;
@@ -417,6 +436,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
      
     logday(Players,playerChosen,day);
     if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
+    else{cout << "The game continues." << endl;}
     killed1=0;killed2=0;
 }
 
@@ -445,7 +465,6 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             logover(3);
         }
         over=true;
-        cout<<"Please check LRS.log for the complete record of this game."<<endl;
         return true;
     }else{return false;}
 }
@@ -473,10 +492,7 @@ void hunterfire(Player Players[]){
             cout << "Already dead!" << endl;
             continue;
         }
-        if (target == 0)
-        {
-            cout << "Abandoned." << endl;
-        }
+        if (target == 0)cout << "Abandoned." << endl;
         else
         {
             cout << "Player " << target << " killed." << endl;
