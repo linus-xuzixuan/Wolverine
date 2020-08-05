@@ -46,7 +46,6 @@ int findplayer(Player Players[],string identity,int numPlayers);
 void hunterfire(Player Players[]);
 
 int main(int argc, char* argv[]){
-
     //Get numPlayers from CLI parameters if possible, or request an input
     if(argc < 2 || atol(argv[1])==-1){
         cout << "Please enter the number of players:";
@@ -106,7 +105,7 @@ int main(int argc, char* argv[]){
             }else if(Power[i]=='H'){
                 cout<<"1 hunter"<<endl;
             }else{
-                cout<<"Error: unrecognized identity in distrib file (not W, G, P or H)"<<endl;
+                cout<<"Error: unrecognized identity in distrib.lrs (not W, G, P or H)"<<endl;
                 return 4;
             }
         }
@@ -359,7 +358,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
 
     //Result announcement
     if(killed1>1000)killed1=0;
-    if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1; //Short circuited evaluation prevents UB for the latter evaluation if killed1 >= 0.
+    if(killed1<0 && Players[-killed1-1].get_state()==0)killed1*=-1; //Short circuited evaluation prevents problems for the latter evaluation if killed1 >= 0.
     if(killed1<=0 || killed1==killed2){ //Move killed2 to killed1, implying 
         killed1=killed2;
         killed2=0;
@@ -381,31 +380,36 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     //Check if the game should end (all wolverines/villagers/powers dead)
     if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
     else{cout<<"The game continues."<<endl;}
-    
-    if(hunter==-1)goto nohunter;
 
     //Open fire if hunter dies
-    if(Players[hunter].get_state()==0 && !hunterfired){
-        hunterfired=true;
-        hunterfire(Players);
-        if(checkover(Players,numWolverines,numVillagers,numPowers)==true)return;
-        else{cout << "The game continues." << endl;}
+    if(hunter!=-1)
+    {
+        if (Players[hunter].get_state() == 0 && !hunterfired)
+        {
+            hunterfired = true;
+            hunterfire(Players);
+            if (checkover(Players, numWolverines, numVillagers, numPowers) == true)
+                return;
+            else
+            {
+                cout << "The game continues." << endl;
+            }
+        }
     }
 
-    nohunter:
     //Check who should speak first
     if(killed1!=0){
-        //next to the first dead person (killed1), if there is one
+        //Next to the first dead person (killed1), if there is one
         cout<< "Player " << killed1 << " will decide whether speaking will start from his/her left or right." << endl;
     }else{
         //Find the first remaining player otherwise
         int speak=0;
         for(int i = 0; i < numPlayers; i++){
             if(Players[i].get_state()==1){
-                speak=i;break;
+                speak=i; break;
             }
         }
-        cout << "Player " << speak+1 << " will speak and then decide whether to continue from his/her left or right." << endl;
+        cout << "Player " << speak + 1 << " will speak and then decide whether to continue from his/her left or right." << endl;
     }
     system("sleep 2");
 
@@ -414,7 +418,7 @@ void startDay(Player Players[],int result1,int result2,int hunter,int numPlayers
     while(true){
         cout<<"When finished speaking and voting, input the number of the player voted out (0 for peace):";
         scanf("%d",&playerChosen);
-        if(playerChosen<0 || playerChosen>numPlayers){
+        if(playerChosen < 0 || playerChosen > numPlayers){
             cout<<"Not a valid player!"<<endl;
             continue;
         }
@@ -459,7 +463,7 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
             }else{powerLeft-=1;}
         }
     }
-    if(wolverineLeft*villagerLeft*powerLeft==0){
+    if(wolverineLeft * villagerLeft * powerLeft==0){
         if(wolverineLeft==0){
             cout<<"All wolverines dead. Game over."<<endl;
             logover(1);
@@ -478,7 +482,7 @@ bool checkover(Player Players[],int numWolverines,int numVillagers,int numPowers
 }
 
 int findplayer(Player Players[],string identity,int numPlayers){
-    for(int i=0;i<numPlayers;i++)
+    for(int i = 0; i < numPlayers; i++)
         if(Players[i].get_identity()==identity)return i;
     return -1;
 }
