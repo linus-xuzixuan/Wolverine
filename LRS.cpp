@@ -136,7 +136,6 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
     for (int i = 0; i < Wolverines + Villagers + Power; i++){
         Player.push_back(i);
     }
-    srand(uint(time(0)));
     shuffle(Player.begin(), Player.end(), default_random_engine(uint(time(0))));
 
     for (int i = 0; i < Wolverines; i++){
