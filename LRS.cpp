@@ -18,6 +18,7 @@ This version currently works on Unix-based systems only as "clear" is a Shell co
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
+#include <random>
 #include "Player.h"
 #include "Logger.h"
 using namespace std;
@@ -136,7 +137,7 @@ void setIdentity(int Wolverines,int Villagers,int Power,Player Players[]){
         Player.push_back(i);
     }
     srand(uint(time(0)));
-    random_shuffle(Player.begin(), Player.end()); //This line reports an error ("random_shuffle" is undefined) on VS Code Insiders as of time of submission, but it checks out and functions properly when compiled with g++ (Apple clang 11.0.0) on macOS 10.15.6 (19G73).
+    shuffle(Player.begin(), Player.end(), default_random_engine(uint(time(0))));
 
     for (int i = 0; i < Wolverines; i++){
         Players[Player[i]].set_id(1);
